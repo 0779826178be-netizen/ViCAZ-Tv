@@ -1,110 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
-<title>VICAZ TV — Your Home of Entertainment</title>
+<meta name="theme-color" content="#0c0c0f">
+<title>VICAZ TV | Movies Entertainment</title>
 <style>
-:root{--red:#e50914;--bg:#090909;--panel:#171717;--muted:#aaa}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
-header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#080808;position:sticky;top:0;z-index:5;border-bottom:1px solid #222}
-.logo{font-size:25px;font-weight:900;color:var(--red);letter-spacing:1px}.logo span{color:#fff}
-nav{display:flex;gap:20px}nav a{color:#eee;text-decoration:none;font-size:14px}
-button,.btn{border:0;border-radius:5px;padding:11px 17px;background:var(--red);color:#fff;font-weight:bold;cursor:pointer}
-button.secondary{background:#333}.hero{min-height:390px;padding:70px 7%;display:flex;align-items:center;background:linear-gradient(90deg,#080808 8%,rgba(8,8,8,.86) 48%,rgba(8,8,8,.25)),linear-gradient(0deg,#090909,transparent 55%),radial-gradient(circle at 75% 35%,#7a1717,#251010 42%,#101010 70%)}
-.hero-content{max-width:560px}.eyebrow{color:#ff555d;font-weight:bold;letter-spacing:2px;font-size:12px}.hero h1{font-size:clamp(36px,7vw,64px);margin:12px 0}.hero p{color:#ddd;line-height:1.6;max-width:500px}
-section{padding:28px 5%}.section-title{font-size:22px;margin:0 0 18px}.movies{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px}
-.card{background:var(--panel);border-radius:8px;overflow:hidden;border:1px solid #292929}.poster{height:190px;display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;background:linear-gradient(145deg,#4c1116,#171717 70%);font-size:20px;font-weight:900;letter-spacing:1px}.card:nth-child(2n) .poster{background:linear-gradient(145deg,#183b43,#171717 75%)}.card:nth-child(3n) .poster{background:linear-gradient(145deg,#49391a,#171717 75%)}
-.card-body{padding:12px}.card h3{font-size:15px;margin:0 0 7px}.card p{font-size:12px;color:var(--muted);margin:0 0 10px}.card button{width:100%;padding:9px;font-size:12px}
-.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.price{background:#171717;border:1px solid #333;border-radius:9px;padding:22px}.price.featured{border:1px solid var(--red)}.amount{font-size:32px;font-weight:bold;margin:10px 0}.muted{color:var(--muted);line-height:1.5;font-size:14px}
-.admin{background:#141414;border:1px solid #333;border-radius:8px;padding:18px;max-width:620px}.admin input,.admin textarea,.modal input{width:100%;padding:12px;margin:7px 0 13px;background:#222;border:1px solid #444;border-radius:5px;color:white}
-footer{padding:28px 5%;border-top:1px solid #222;color:#999;font-size:13px;text-align:center}
-.modal-wrap{display:none;position:fixed;inset:0;background:#000c;z-index:10;align-items:center;justify-content:center;padding:18px}.modal{background:#191919;padding:22px;border-radius:10px;max-width:420px;width:100%;border:1px solid #444}.modal h2{margin-top:0}.close{float:right;background:#333}
-.notice{font-size:12px;color:#aaa;line-height:1.5;margin-top:12px}
-@media(max-width:600px){header{padding:0 4%;height:60px}.logo{font-size:21px}nav{gap:11px}nav a{font-size:12px}.hero{min-height:350px;padding:55px 6%}.poster{height:160px}section{padding:24px 4%}}
+:root{--gold:#e5bd62;--red:#b92332;--bg:#0c0c0f;--panel:#19191e;--muted:#b9b9c0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+header{padding:16px 5%;background:#050505;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:24px;letter-spacing:1px}.brand span{color:var(--gold)}.tagline{font-size:10px;color:#aaa;letter-spacing:2px;margin-top:4px}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav a{color:#eee;text-decoration:none;padding:9px 11px;border:1px solid #333;border-radius:5px;font-size:13px}
+nav a:hover{border-color:var(--gold);color:var(--gold)}
+.hero{padding:65px 7%;background:linear-gradient(110deg,#080808,#351318 75%,#111);min-height:330px;display:flex;align-items:center}
+.eyebrow{color:var(--gold);letter-spacing:3px;font-size:11px;font-weight:bold}h1{font-size:clamp(36px,8vw,60px);line-height:1.08;margin:16px 0}h1 span{color:var(--gold)}
+.hero p{color:#ddd;line-height:1.6;max-width:600px;font-size:17px}
+.btn{display:inline-block;background:var(--red);color:white;padding:13px 18px;border:0;border-radius:5px;font-weight:bold;text-decoration:none;cursor:pointer}
+.btn.secondary{background:#292930;border:1px solid #555}.actions{display:flex;gap:10px;flex-wrap:wrap}
+section{padding:38px 7%}h2{font-size:28px;margin:9px 0 18px}.muted{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid #333;border-radius:8px;overflow:hidden}
+.poster{height:155px;padding:18px;display:flex;align-items:end;background:linear-gradient(135deg,#762630,#17171b)}.poster.gold{background:linear-gradient(135deg,#79552a,#17171b)}.poster.blue{background:linear-gradient(135deg,#29445c,#17171b)}
+.poster h3{font-size:22px;letter-spacing:1px;margin:0}.cardbody{padding:15px}.cardbody p{font-size:13px;color:var(--muted);line-height:1.5}
+.panel{background:var(--panel);border:1px solid #393939;border-radius:8px;padding:20px;margin-top:12px}
+.price{font-size:30px;color:var(--gold);font-weight:bold;margin:8px 0}.price small{font-size:14px;color:#bbb;font-weight:normal}
+label{display:block;margin:14px 0 7px;color:var(--gold);font-size:14px}
+input,select{width:100%;padding:13px;background:#09090b;color:white;border:1px solid #555;border-radius:5px;font-size:16px}
+.notice{font-size:13px;color:#ddd;background:#252015;border-left:3px solid var(--gold);padding:13px;line-height:1.55}
+.authgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+footer{padding:25px 7%;border-top:1px solid #333;color:#aaa;font-size:13px;line-height:1.6}
+@media(max-width:600px){header{align-items:flex-start;flex-direction:column}.hero{padding-top:48px;padding-bottom:48px}nav a{font-size:12px;padding:8px}section{padding:30px 5%}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">VICAZ <span>TV</span></div>
-  <nav><a href="#home">Home</a><a href="#movies">Movies</a><a href="#plans">Plans</a></nav>
-  <button onclick="openModal('account')">Sign in</button>
+ <div><div class="brand">🦁 VICAZ <span>TV</span></div><div class="tagline">MOVIES ENTERTAINMENT</div></div>
+ <nav><a href="#home">Home</a><a href="#movies">Movies</a><a href="#plans">Prices</a><a href="#account">Account</a></nav>
 </header>
 <main>
-<section class="hero" id="home">
- <div class="hero-content">
-  <div class="eyebrow">WELCOME TO VICAZ TV</div>
-  <h1>Your Home of Entertainment</h1>
-  <p>Enjoy exciting local movies, comedy and stories from VICAZ Movies Entertainment. Find your next favourite film right here.</p>
-  <button onclick="document.getElementById('movies').scrollIntoView({behavior:'smooth'})">Explore Movies</button>
+<div class="hero" id="home"><div><div class="eyebrow">WELCOME TO VICAZ TV</div><h1>Creating stories,<br><span>inspiring generation.</span></h1><p>Watch Zambian movies, comedy, trailers and original episodes from VICAZ Movies Entertainment.</p><div class="actions"><a class="btn" href="#movies">EXPLORE MOVIES</a><a class="btn secondary" href="#account">JOIN VICAZ TV</a></div></div></div>
+<section id="movies"><div class="eyebrow">DISCOVER</div><h2>Featured Movies</h2><p class="muted">Movie previews are displayed here. Full movies will be available after the secure streaming and payment system is connected.</p>
+ <div class="grid">
+  <article class="card"><div class="poster"><h3>MY ENEMY</h3></div><div class="cardbody"><b>My Enemy</b><p>VICAZ Original · Coming soon</p><span class="price">K15 <small>/ movie</small></span></div></article>
+  <article class="card"><div class="poster gold"><h3>GETTO LOVE</h3></div><div class="cardbody"><b>Getto Love</b><p>Romance · Coming soon</p><span class="price">K15 <small>/ movie</small></span></div></article>
+  <article class="card"><div class="poster blue"><h3>HEART BREAK</h3></div><div class="cardbody"><b>Heart Break</b><p>Drama · Coming soon</p><span class="price">K15 <small>/ movie</small></span></div></article>
  </div>
 </section>
-<section id="movies">
- <h2 class="section-title">Featured Movies</h2>
- <div class="movies" id="movieGrid">
-  <article class="card"><div class="poster">VICAZ<br>ORIGINAL</div><div class="card-body"><h3>Coming Soon</h3><p>VICAZ Movies Entertainment</p><button onclick="buyMovie('Coming Soon')">Watch — K15</button></div></article>
-  <article class="card"><div class="poster">GHETTO<br>LOVE</div><div class="card-body"><h3>Ghetto Love</h3><p>A story of love and life.</p><button onclick="buyMovie('Ghetto Love')">Watch — K15</button></div></article>
-  <article class="card"><div class="poster">MY EX<br>WIFE</div><div class="card-body"><h3>My Ex Wife</h3><p>Drama from VICAZ.</p><button onclick="buyMovie('My Ex Wife')">Watch — K15</button></div></article>
- </div>
+<section id="plans"><div class="eyebrow">CHOOSE YOUR ACCESS</div><h2>VICAZ TV Plans</h2><div class="grid">
+ <div class="panel"><h3>Single Movie</h3><div class="price">K15</div><p class="muted">Pay once to unlock one movie.</p></div>
+ <div class="panel"><h3>Monthly Subscription</h3><div class="price">K40 <small>/ month</small></div><p class="muted">Access eligible movies during your subscription.</p></div>
+ </div><p class="notice">Payments are not connected yet. Do not send money through this demonstration page. Mobile money checkout and automatic payment confirmation must be integrated before launch.</p>
 </section>
-<section id="plans">
- <h2 class="section-title">Choose Your Plan</h2>
- <div class="pricing">
-  <div class="price"><h3>Single Movie</h3><div class="amount">K15</div><p class="muted">Pay for one movie at a time.</p><button onclick="openPayment('Single movie — K15')">Choose Plan</button></div>
-  <div class="price featured"><h3>Monthly Access</h3><div class="amount">K40</div><p class="muted">Monthly access to eligible movies.</p><button onclick="openPayment('Monthly subscription — K40')">Subscribe</button></div>
- </div>
-</section>
-<section id="admin">
- <h2 class="section-title">Admin: Add a Movie</h2>
- <div class="admin">
-  <p class="muted">Demo upload area. Add a title and poster/video from this device to preview it on this page. This browser-only demo does not permanently store uploads or publish video files online.</p>
-  <label>Movie title<input id="movieTitle" placeholder="Enter movie title"></label>
-  <label>Short description<input id="movieDescription" placeholder="Enter a short description"></label>
-  <label>Poster image<input id="posterFile" type="file" accept="image/*"></label>
-  <label>Video file<input id="videoFile" type="file" accept="video/*"></label>
-  <button onclick="addMovie()">Add movie preview</button>
-  <p class="notice">For a real streaming service, we must next connect secure video storage, customer accounts and payment verification. Never collect or store customers' bank PINs or mobile-money PINs on this page.</p>
- </div>
+<section id="account"><div class="eyebrow">YOUR VICAZ ACCOUNT</div><h2>Register or Sign In</h2>
+ <div class="notice">These are account-screen previews only. The forms do not create real accounts or store passwords. We must connect secure authentication before viewers can register, sign in, pay or unlock movies.</div>
+ <div class="authgrid">
+  <div class="panel"><h3>Create an account</h3><form id="registerForm">
+   <label for="fullName">Full name</label><input id="fullName" placeholder="Your name" autocomplete="name" required>
+   <label for="regEmail">Email address</label><input id="regEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+   <label for="regPhone">Phone number</label><input id="regPhone" type="tel" placeholder="e.g. 09..." autocomplete="tel" required>
+   <label for="regPass">Create password</label><input id="regPass" type="password" placeholder="Create a password" autocomplete="new-password" required>
+   <button class="btn" type="submit" style="margin-top:16px">CREATE ACCOUNT</button>
+  </form></div>
+  <div class="panel"><h3>Welcome back</h3><form id="loginForm">
+   <label for="loginEmail">Email address</label><input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+   <label for="loginPass">Password</label><input id="loginPass" type="password" placeholder="Your password" autocomplete="current-password" required>
+   <button class="btn" type="submit" style="margin-top:16px">SIGN IN</button>
+  </form></div>
+ </div><p id="formMessage" class="muted" aria-live="polite"></p>
 </section>
 </main>
-<footer>© <span id="year"></span> VICAZ TV · Your Home of Entertainment · Zambia</footer>
-
-<div class="modal-wrap" id="modalWrap" onclick="if(event.target===this)closeModal()">
- <div class="modal"><button class="close" onclick="closeModal()">✕</button><div id="modalContent"></div></div>
-</div>
+<footer><b style="color:white">VICAZ TV</b> · Creating stories, inspiring generation.<br>Movie price: K15 · Monthly subscription: K40<br>© 2026 VICAZ MOVIES ENTERTAINMENT</footer>
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
-function openModal(kind){
- const c=document.getElementById('modalContent');
- c.innerHTML=kind==='account'
- ? '<h2>Sign in / Create account</h2><p class="muted">Account registration will be connected in the next development step.</p><input placeholder="Phone number or email"><input type="password" placeholder="Password"><button onclick="alert(\\'Account system is not connected yet.\\')">Continue</button>'
- : '<h2>Payment details</h2><p class="muted">'+kind+'</p><p class="muted">Payment processing is not connected yet. Contact VICAZ TV to confirm the official payment method before sending money.</p><button onclick="window.open(\\'https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20to%20ask%20about%20payment.\\',\\'_blank\\')">Ask on WhatsApp</button><p class="notice">Do not send money to an unverified number. Access is not automatically unlocked in this demo.</p>';
- document.getElementById('modalWrap').style.display='flex';
-}
-function openPayment(plan){openModal(plan)}
-function closeModal(){document.getElementById('modalWrap').style.display='none'}
-function buyMovie(name){openPayment('Watch '+name+' — K15')}
-function addMovie(){
- const title=document.getElementById('movieTitle').value.trim();
- const desc=document.getElementById('movieDescription').value.trim();
- const img=document.getElementById('posterFile').files[0];
- const vid=document.getElementById('videoFile').files[0];
- if(!title){alert('Please enter a movie title.');return}
- const card=document.createElement('article');card.className='card';
- const poster=document.createElement('div');poster.className='poster';
- if(img){poster.style.background='center/cover no-repeat url("'+URL.createObjectURL(img)+'")';poster.textContent=''}
- else poster.textContent=title.toUpperCase();
- const body=document.createElement('div');body.className='card-body';
- const h=document.createElement('h3');h.textContent=title;
- const p=document.createElement('p');p.textContent=desc||'VICAZ TV movie';
- const b=document.createElement('button');b.textContent='Watch — K15';b.onclick=()=>openPayment('Watch '+title+' — K15');
- body.append(h,p,b);card.append(poster,body);
- if(vid){const v=document.createElement('video');v.controls=true;v.src=URL.createObjectURL(vid);v.style.width='100%';body.appendChild(v)}
- document.getElementById('movieGrid').prepend(card);
- document.getElementById('movieTitle').value='';document.getElementById('movieDescription').value='';
- alert('Movie preview added on this device. It is not uploaded to the live website.');
-}
+const msg=document.getElementById('formMessage');
+document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();msg.textContent='This is a visual demo only. Secure account registration is not connected yet.';});
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();msg.textContent='This is a visual demo only. Secure sign-in is not connected yet.';});
 </script>
 </body>
 </html>
