@@ -192,6 +192,68 @@ function watchMovie(name){
  alert(name + " will be available after payment setup.");
 }
 </script>
+<section id="account" style="padding:25px;background:#171717;text-align:center;">
+<h2 style="color:#ffbd00;">VICAZ TV ACCOUNT</h2>
 
-</body>
+<h3>Create Your Account</h3>
+
+<input id="signupEmail" type="email" placeholder="Your email" style="padding:12px;margin:8px;width:85%;">
+<br>
+<input id="signupPassword" type="password" placeholder="Create password" style="padding:12px;margin:8px;width:85%;">
+<br>
+<button onclick="signUp()">REGISTER</button>
+
+<hr>
+
+<h3>Already Have an Account?</h3>
+
+<input id="loginEmail" type="email" placeholder="Your email" style="padding:12px;margin:8px;width:85%;">
+<br>
+<input id="loginPassword" type="password" placeholder="Your password" style="padding:12px;margin:8px;width:85%;">
+<br>
+<button onclick="logIn()">LOGIN</button>
+
+<p id="accountMessage"></p>
+<button onclick="logOut()">LOG OUT</button>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const client = supabase.createClient(
+'https://baqdstusvqljjowibjby.supabase.co',
+'sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY'
+);
+
+async function signUp(){
+const email = document.getElementById('signupEmail').value;
+const password = document.getElementById('signupPassword').value;
+
+const {error} = await client.auth.signUp({
+email: email,
+password: password
+});
+
+document.getElementById('accountMessage').innerText =
+error ? error.message : 'Registration successful! Check your email to confirm your account.';
+}
+
+async function logIn(){
+const email = document.getElementById('loginEmail').value;
+const password = document.getElementById('loginPassword').value;
+
+const {error} = await client.auth.signInWithPassword({
+email: email,
+password: password
+});
+
+document.getElementById('accountMessage').innerText =
+error ? error.message : 'Welcome to VICAZ TV!';
+}
+
+async function logOut(){
+await client.auth.signOut();
+document.getElementById('accountMessage').innerText = 'You have logged out.';
+}
+</script></body>
 </html>
