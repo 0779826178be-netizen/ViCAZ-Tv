@@ -1,100 +1,152 @@
-strongYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-<title>VICAZ MOVIES</title>
+
+<title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;
- background:#090909;
- color:white;
- font-family:Arial,sans-serif;
- padding-bottom:75px;
+margin:0;
+background:#090909;
+color:white;
+font-family:Arial,sans-serif;
+padding-bottom:75px;
 }
+
 header{
- background:#171717;
- padding:18px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- position:sticky;
- top:0;
- z-index:10;
+background:#171717;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:10;
 }
-.logo{color:#ffbd00;font-size:23px;font-weight:bold}
+
+.logo{
+color:#ffbd00;
+font-size:23px;
+font-weight:bold;
+}
+
 .hero{
- text-align:center;
- padding:55px 15px;
- background:linear-gradient(135deg,#000,#512300);
+text-align:center;
+padding:60px 15px;
+background:linear-gradient(135deg,#000,#512300);
 }
-.hero h1{color:#ffbd00;font-size:36px}
+
+.hero h1{
+color:#ffbd00;
+font-size:36px;
+}
+
 button{
- background:#ffbd00;
- border:0;
- padding:12px 18px;
- border-radius:5px;
- font-weight:bold;
+background:#ffbd00;
+border:0;
+padding:12px 18px;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+margin:5px;
 }
+
 section{padding:20px}
+
 h2{color:#ffbd00}
+
 .movies{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:14px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
 }
+
 .movie{
- background:#202020;
- border-radius:9px;
- overflow:hidden;
- text-align:center;
- padding-bottom:15px;
+background:#202020;
+border-radius:9px;
+overflow:hidden;
+text-align:center;
+padding-bottom:15px;
 }
+
 .poster{
- height:145px;
- background:linear-gradient(135deg,#551b00,#111);
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:45px;
+height:160px;
+background:linear-gradient(135deg,#551b00,#111);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:45px;
 }
+
+.poster img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
 .movie h3{font-size:15px}
-.movie p{color:#aaa;font-size:12px}
+
+.movie p{
+color:#aaa;
+font-size:12px;
+}
+
 .price{
- background:#202020;
- padding:20px;
- text-align:center;
- margin-bottom:15px;
- border-radius:8px;
+background:#202020;
+padding:20px;
+text-align:center;
+margin-bottom:15px;
+border-radius:8px;
 }
+
 .price h1{color:#ffbd00}
-nav.bottom{
- position:fixed;
- bottom:0;
- left:0;
- width:100%;
- background:#171717;
- display:flex;
- justify-content:space-around;
- padding:15px 5px;
- z-index:20;
+
+.account{
+background:#171717;
+padding:25px;
+text-align:center;
 }
-nav.bottom a{
- color:white;
- text-decoration:none;
- font-size:13px;
+
+input{
+padding:13px;
+margin:8px;
+width:90%;
+border-radius:5px;
+border:0;
 }
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#171717;
+display:flex;
+justify-content:space-around;
+padding:15px 5px;
+z-index:20;
+}
+
+.bottom a{
+color:white;
+text-decoration:none;
+font-size:12px;
+}
+
 footer{
- text-align:center;
- padding:25px;
- color:#aaa;
- background:#171717;
+text-align:center;
+padding:25px;
+color:#aaa;
+background:#171717;
 }
+
 @media(min-width:700px){
- .movies{grid-template-columns:repeat(4,1fr)}
+.movies{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
@@ -102,167 +154,283 @@ footer{
 <body>
 
 <header>
-<div class="logo">🎬 VICAZ MOVIES</div>
+<div class="logo">🎬 VICAZ TV</div>
 </header>
 
 <div class="hero" id="home">
-<h1>VICAZ MOVIES</h1>
+<h1>VICAZ TV</h1>
 <h2>Your Home of Entertainment</h2>
-<p>Discover the best African movies, drama and comedy.</p>
-<button onclick="document.getElementById('movies').scrollIntoView()">Explore Movies</button>
+<p>Discover African movies, drama and comedy.</p>
+
+<button onclick="document.getElementById('movies').scrollIntoView()">
+EXPLORE MOVIES
+</button>
 </div>
 
 <section id="movies">
+
 <h2>Featured Movies 🎬</h2>
 
 <div class="movies">
 
 <div class="movie">
+
 <div class="poster">
-<img src="file_00000000f9b48210a87218812fee24f9.jpg" style="width:100%;height:100%;object-fit:cover;">
+<img src="file_00000000f9b48210a87218812fee24f9.jpg"
+onerror="this.style.display='none'">
 </div>
+
 <h3>My Ex Wife</h3>
-<p>VICAZ Original</p><button onclick="window.open('https://baqdstusvqljjowibjby.supabase.co/storage/v1/object/sign/Vicaz%20tv/VID_1791953483589.mp4?token=eyJraWQiOiJmMTBjYzhmMi0yYTQ1LTRlNzUtOGNiZi1hYzQ4YjQwZTNkYTIiLCJhbGciOiJFUzI1NiJ9.eyJ1cmwiOiJWaWNheiB0di9WSURfMTc5MTk1MzQ4MzU4OS5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzk1NTYwNTQ1LCJleHAiOjE4MDAxMzk3NDV9.kPNaG_sOM7Hf9BkoMFqAsW6sDMvFCC80Okpkv0HPjFPvkJjsWVObyc_8n9huDFBihLMOJ5Qrhzk8fsEnc1zpng','_blank')">WATCH TRAILER</button>
-<button onclick="watchMovie('My Ex Wife')">Watch Now</button>
+<p>VICAZ Original</p>
+
+<button onclick="watchTrailer()">
+WATCH TRAILER
+</button>
+
+<button onclick="watchMovie('My Ex Wife')">
+WATCH NOW
+</button>
+
 </div>
 
 <div class="movie">
 <div class="poster">❤️</div>
 <h3>Getto Love</h3>
 <p>Romance Drama</p>
-<button onclick="watchMovie('Getto Love')">Watch Now</button>
+<button onclick="watchMovie('Getto Love')">
+WATCH NOW
+</button>
 </div>
 
 <div class="movie">
 <div class="poster">🎭</div>
 <h3>Basuni</h3>
 <p>Coming Soon</p>
-<button onclick="watchMovie('Basuni')">Details</button>
+<button onclick="alert('Basuni is coming soon!')">
+DETAILS
+</button>
 </div>
 
 <div class="movie">
 <div class="poster">🍿</div>
 <h3>More Movies</h3>
 <p>Coming Soon</p>
-<button onclick="alert('New movies coming soon!')">Explore</button>
+<button onclick="alert('New movies coming soon!')">
+EXPLORE
+</button>
 </div>
 
 </div>
 </section>
 
 <section id="plans">
-<h2>Our Payment Plans</h2>
+
+<h2>Our Payment Plans 💳</h2>
 
 <div class="price">
 <h3>Watch One Movie</h3>
 <h1>K15</h1>
 <p>Pay once and enjoy one movie.</p>
-<button onclick="alert('Payment system coming soon!')">Choose K15</button>
+<button onclick="showPayment()">
+CHOOSE K15
+</button>
 </div>
 
 <div class="price">
 <h3>Monthly Subscription</h3>
 <h1>K40</h1>
 <p>Enjoy eligible movies for 30 days.</p>
-<button onclick="alert('Subscription system coming soon!')">Subscribe K40</button>
+<button onclick="showPayment()">
+SUBSCRIBE K40
+</button>
 </div>
+
 </section>
 
-<section id="about">
-<h2>About VICAZ MOVIES</h2>
-<p>VICAZ MOVIES brings you African entertainment, original films, comedy and drama.</p>
+<section id="payment" class="price">
+
+<h2>VICAZ TV PAYMENT</h2>
+
+<p>Payment Method: Airtel Money</p>
+
+<h3>0778603979</h3>
+
+<p>Account Name: Benson Simuyemba</p>
+
+<p>After payment, contact VICAZ TV to confirm.</p>
+
+<button onclick="contactAdmin()">
+CONTACT VICAZ TV
+</button>
+
 </section>
 
-<footer>
-<h3>VICAZ MOVIES</h3>
-<p>Your Home of Entertainment</p>
-<p>Powered by VICAZ MOVIES ENTERTAINMENT</p>
-<p>© 2026 All Rights Reserved.</p>
-</footer>
+<section id="account" class="account">
 
-<nav class="bottom">
-<a href="#home">🏠 Home</a>
-<a href="#movies">🎬 Movies</a>
-<a href="#plans">💳 Plans</a>
-<a href="#about">ℹ️ About</a>
-</nav>
-
-<script>
-function watchMovie(name){
- alert(name + " will be available after payment setup.");
-}
-</script>
-<section id="account" style="padding:25px;background:#171717;text-align:center;">
-<h2 style="color:#ffbd00;">VICAZ TV ACCOUNT</h2>
+<h2>VICAZ TV ACCOUNT</h2>
 
 <h3>Create Your Account</h3>
 
-<input id="signupEmail" type="email" placeholder="Your email" style="padding:12px;margin:8px;width:85%;">
+<input id="signupEmail"
+type="email"
+placeholder="Your email">
+
+<input id="signupPassword"
+type="password"
+placeholder="Create password">
+
 <br>
-<input id="signupPassword" type="password" placeholder="Create password" style="padding:12px;margin:8px;width:85%;">
-<br>
+
 <button onclick="signUp()">REGISTER</button>
 
 <hr>
 
 <h3>Already Have an Account?</h3>
 
-<input id="loginEmail" type="email" placeholder="Your email" style="padding:12px;margin:8px;width:85%;">
+<input id="loginEmail"
+type="email"
+placeholder="Your email">
+
+<input id="loginPassword"
+type="password"
+placeholder="Your password">
+
 <br>
-<input id="loginPassword" type="password" placeholder="Your password" style="padding:12px;margin:8px;width:85%;">
-<br>
+
 <button onclick="logIn()">LOGIN</button>
 
 <p id="accountMessage"></p>
+
 <button onclick="logOut()">LOG OUT</button>
+
 </section>
+
+<section id="about">
+
+<h2>About VICAZ TV</h2>
+
+<p>
+VICAZ TV brings you African entertainment,
+original films, comedy and drama.
+</p>
+
+<p>
+Watch amazing movies from VICAZ MOVIES ENTERTAINMENT.
+</p>
+
+</section>
+
+<footer>
+
+<h3>🎬 VICAZ TV</h3>
+
+<p>Your Home of Entertainment</p>
+
+<p>Powered by VICAZ MOVIES ENTERTAINMENT</p>
+
+<p>© 2026 All Rights Reserved.</p>
+
+</footer>
+
+<nav class="bottom">
+
+<a href="#home">🏠 Home</a>
+<a href="#movies">🎬 Movies</a>
+<a href="#plans">💳 Plans</a>
+<a href="#account">👤 Account</a>
+
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
 const client = supabase.createClient(
 'https://baqdstusvqljjowibjby.supabase.co',
 'sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY'
 );
 
+function watchTrailer(){
+
+window.open(
+'https://baqdstusvqljjowibjby.supabase.co/storage/v1/object/sign/Vicaz%20tv/VID_1791953483589.mp4?token=eyJraWQiOiJmMTBjYzhmMi0yYTQ1LTRlNzUtOGNiZi1hYzQ4YjQwZTNkYTIiLCJhbGciOiJFUzI1NiJ9.eyJ1cmwiOiJWaWNheiB0di9WSURfMTc5MTk1MzQ4MzU4OS5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzk1NTYwNTQ1LCJleHAiOjE4MDAxMzk3NDV9.kPNaG_sOM7Hf9BkoMFqAsW6sDMvFCC80Okpkv0HPjFPvkJjsWVObyc_8n9huDFBihLMOJ5Qrhzk8fsEnc1zpng',
+'_blank'
+);
+
+}
+
+function watchMovie(name){
+
+document.getElementById('payment').scrollIntoView();
+
+alert(name + ' costs K15. Please complete payment first.');
+
+}
+
+function showPayment(){
+
+document.getElementById('payment').scrollIntoView();
+
+}
+
+function contactAdmin(){
+
+window.open(
+'https://wa.me/260778603979',
+'_blank'
+);
+
+}
+
 async function signUp(){
-const email = document.getElementById('signupEmail').value;
-const password = document.getElementById('signupPassword').value;
+
+const email =
+document.getElementById('signupEmail').value;
+
+const password =
+document.getElementById('signupPassword').value;
 
 const {error} = await client.auth.signUp({
-email: email,
-password: password
+email:email,
+password:password
 });
 
 document.getElementById('accountMessage').innerText =
-error ? error.message : 'Registration successful! Check your email to confirm your account.';
+error ? error.message :
+'Registration successful! Check your email to confirm your account.';
+
 }
 
 async function logIn(){
-const email = document.getElementById('loginEmail').value;
-const password = document.getElementById('loginPassword').value;
+
+const email =
+document.getElementById('loginEmail').value;
+
+const password =
+document.getElementById('loginPassword').value;
 
 const {error} = await client.auth.signInWithPassword({
-email: email,
-password: password
+email:email,
+password:password
 });
 
 document.getElementById('accountMessage').innerText =
-error ? error.message : 'Welcome to VICAZ TV!';
+error ? error.message :
+'Welcome to VICAZ TV! You are logged in.';
+
 }
 
-async function logOut(){</script>
-await client.auth.signOut();
-document.getElementById('accountMessage').innerText = 'You have logged out.';
+async function logOut(){
+
+const {error} = await client.auth.signOut();
+
+document.getElementById('accountMessage').innerText =
+error ? error.message :
+'You have logged out.';
+
 }
- <section id="payment" style="background:#171717;padding:20px;margin:20px 0;border:1px solid gold;border-radius:12px;color:white;">
-  <h2 style="color:gold;">VICAZ TV PAYMENT</h2>
-  <p>Pay K15 to watch one movie.</p>
-  <p>Pay K40 for a 30-day subscription.</p>
-  <p><strong>Payment method:</strong> Airtel Money</p>
-  <p><strong>Number:</strong> 0778603979</p>
-  <p><strong>Account name:</strong> Benson Simuyemba</p>
-  <p>After paying, contact VICAZ TV to confirm your payment.</p>
-</section>
-</script></body>
+
+</script>
+
+</body>
 </html>
