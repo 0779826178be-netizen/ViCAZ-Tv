@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VICAZ TV</title>
+<meta name="theme-color" content="#090909">
+<title>VICAZ MOVIES</title>
 
 <style>
 *{box-sizing:border-box}
@@ -12,76 +13,85 @@ body{
  background:#090909;
  color:white;
  font-family:Arial,sans-serif;
+ padding-bottom:75px;
 }
 header{
  background:#171717;
- padding:20px;
+ padding:18px;
  display:flex;
  justify-content:space-between;
  align-items:center;
+ position:sticky;
+ top:0;
+ z-index:10;
 }
-.logo{
- color:#ffbd00;
- font-size:25px;
- font-weight:bold;
-}
-nav a{
- color:white;
- text-decoration:none;
- margin-left:12px;
-}
+.logo{color:#ffbd00;font-size:23px;font-weight:bold}
 .hero{
- padding:65px 20px;
- background:linear-gradient(90deg,#000,#442000);
  text-align:center;
+ padding:55px 15px;
+ background:linear-gradient(135deg,#000,#512300);
 }
-.hero h1{font-size:38px;color:#ffbd00}
-.hero p{font-size:17px}
+.hero h1{color:#ffbd00;font-size:36px}
 button{
  background:#ffbd00;
- color:black;
  border:0;
- padding:12px 20px;
+ padding:12px 18px;
  border-radius:5px;
  font-weight:bold;
- cursor:pointer;
 }
 section{padding:20px}
 h2{color:#ffbd00}
 .movies{
  display:grid;
  grid-template-columns:repeat(2,1fr);
- gap:15px;
+ gap:14px;
 }
 .movie{
  background:#202020;
- border-radius:8px;
+ border-radius:9px;
  overflow:hidden;
- padding-bottom:15px;
  text-align:center;
+ padding-bottom:15px;
 }
 .poster{
- height:150px;
- background:linear-gradient(135deg,#4b1600,#111);
+ height:145px;
+ background:linear-gradient(135deg,#551b00,#111);
  display:flex;
  justify-content:center;
  align-items:center;
- font-size:35px;
+ font-size:45px;
 }
-.movie h3{font-size:16px}
-.movie p{color:#bbb;font-size:13px}
+.movie h3{font-size:15px}
+.movie p{color:#aaa;font-size:12px}
 .price{
- background:#171717;
- margin:15px 0;
+ background:#202020;
  padding:20px;
- border-radius:8px;
  text-align:center;
+ margin-bottom:15px;
+ border-radius:8px;
+}
+.price h1{color:#ffbd00}
+nav.bottom{
+ position:fixed;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:#171717;
+ display:flex;
+ justify-content:space-around;
+ padding:15px 5px;
+ z-index:20;
+}
+nav.bottom a{
+ color:white;
+ text-decoration:none;
+ font-size:13px;
 }
 footer{
- background:#171717;
- padding:25px;
  text-align:center;
+ padding:25px;
  color:#aaa;
+ background:#171717;
 }
 @media(min-width:700px){
  .movies{grid-template-columns:repeat(4,1fr)}
@@ -92,18 +102,13 @@ footer{
 <body>
 
 <header>
-<div class="logo">VICAZ TV</div>
-<nav>
-<a href="#home">Home</a>
-<a href="#movies">Movies</a>
-<a href="#plans">Plans</a>
-</nav>
+<div class="logo">🎬 VICAZ MOVIES</div>
 </header>
 
 <div class="hero" id="home">
-<h1>VICAZ TV</h1>
+<h1>VICAZ MOVIES</h1>
 <h2>Your Home of Entertainment</h2>
-<p>Watch African movies, comedy, drama and more.</p>
+<p>Discover the best African movies, drama and comedy.</p>
 <button onclick="document.getElementById('movies').scrollIntoView()">Explore Movies</button>
 </div>
 
@@ -115,19 +120,19 @@ footer{
 <div class="movie">
 <div class="poster">🎬</div>
 <h3>My Ex Wife</h3>
-<p>A VICAZ Original</p>
-<button onclick="watchMovie('My Ex Wife')">Watch Movie</button>
+<p>VICAZ Original</p>
+<button onclick="watchMovie('My Ex Wife')">Watch Now</button>
+</div>
+
+<div class="movie">
+<div class="poster">❤️</div>
+<h3>Getto Love</h3>
+<p>Romance Drama</p>
+<button onclick="watchMovie('Getto Love')">Watch Now</button>
 </div>
 
 <div class="movie">
 <div class="poster">🎭</div>
-<h3>Getto Love</h3>
-<p>A love story</p>
-<button onclick="watchMovie('Getto Love')">Watch Movie</button>
-</div>
-
-<div class="movie">
-<div class="poster">🎥</div>
 <h3>Basuni</h3>
 <p>Coming Soon</p>
 <button onclick="watchMovie('Basuni')">Details</button>
@@ -136,41 +141,53 @@ footer{
 <div class="movie">
 <div class="poster">🍿</div>
 <h3>More Movies</h3>
-<p>New entertainment</p>
-<button onclick="alert('More movies coming soon!')">Explore</button>
+<p>Coming Soon</p>
+<button onclick="alert('New movies coming soon!')">Explore</button>
 </div>
 
 </div>
 </section>
 
 <section id="plans">
-<h2>Choose Your Plan</h2>
+<h2>Our Payment Plans</h2>
 
 <div class="price">
-<h3>Single Movie</h3>
+<h3>Watch One Movie</h3>
 <h1>K15</h1>
-<p>Pay for one movie.</p>
-<button onclick="alert('Payment instructions will be available soon.')">Choose K15</button>
+<p>Pay once and enjoy one movie.</p>
+<button onclick="alert('Payment system coming soon!')">Choose K15</button>
 </div>
 
 <div class="price">
 <h3>Monthly Subscription</h3>
 <h1>K40</h1>
-<p>Enjoy eligible movies for one month.</p>
-<button onclick="alert('Payment instructions will be available soon.')">Subscribe K40</button>
+<p>Enjoy eligible movies for 30 days.</p>
+<button onclick="alert('Subscription system coming soon!')">Subscribe K40</button>
 </div>
 </section>
 
+<section id="about">
+<h2>About VICAZ MOVIES</h2>
+<p>VICAZ MOVIES brings you African entertainment, original films, comedy and drama.</p>
+</section>
+
 <footer>
-<h3>VICAZ TV</h3>
+<h3>VICAZ MOVIES</h3>
 <p>Your Home of Entertainment</p>
 <p>Powered by VICAZ MOVIES ENTERTAINMENT</p>
-<p>© 2026 VICAZ TV. All Rights Reserved.</p>
+<p>© 2026 All Rights Reserved.</p>
 </footer>
+
+<nav class="bottom">
+<a href="#home">🏠 Home</a>
+<a href="#movies">🎬 Movies</a>
+<a href="#plans">💳 Plans</a>
+<a href="#about">ℹ️ About</a>
+</nav>
 
 <script>
 function watchMovie(name){
- alert(name + " - Movie access will be available after payment setup.");
+ alert(name + " will be available after payment setup.");
 }
 </script>
 
