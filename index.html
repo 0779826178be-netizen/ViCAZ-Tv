@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
@@ -15,15 +14,12 @@ margin:0;
 background:#090909;
 color:white;
 font-family:Arial,sans-serif;
-padding-bottom:75px;
+padding-bottom:70px;
 }
 
 header{
 background:#171717;
 padding:18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
 position:sticky;
 top:0;
 z-index:10;
@@ -31,13 +27,13 @@ z-index:10;
 
 .logo{
 color:#ffbd00;
-font-size:23px;
+font-size:24px;
 font-weight:bold;
 }
 
 .hero{
 text-align:center;
-padding:60px 15px;
+padding:55px 15px;
 background:linear-gradient(135deg,#000,#512300);
 }
 
@@ -48,12 +44,17 @@ font-size:36px;
 
 button{
 background:#ffbd00;
+color:black;
 border:0;
-padding:12px 18px;
+padding:13px 18px;
 border-radius:5px;
 font-weight:bold;
 cursor:pointer;
 margin:5px;
+}
+
+button:disabled{
+opacity:.5;
 }
 
 section{padding:20px}
@@ -89,11 +90,11 @@ height:100%;
 object-fit:cover;
 }
 
-.movie h3{font-size:15px}
+.movie h3{font-size:16px}
 
 .movie p{
 color:#aaa;
-font-size:12px;
+font-size:13px;
 }
 
 .price{
@@ -113,11 +114,18 @@ text-align:center;
 }
 
 input{
-padding:13px;
-margin:8px;
-width:90%;
+display:block;
+padding:14px;
+margin:12px auto;
+width:95%;
+max-width:400px;
 border-radius:5px;
 border:0;
+}
+
+#accountMessage{
+color:#ffbd00;
+overflow-wrap:anywhere;
 }
 
 .bottom{
@@ -161,276 +169,129 @@ background:#171717;
 <h1>VICAZ TV</h1>
 <h2>Your Home of Entertainment</h2>
 <p>Discover African movies, drama and comedy.</p>
-
-<button onclick="document.getElementById('movies').scrollIntoView()">
-EXPLORE MOVIES
-</button>
+<button onclick="goTo('movies')">EXPLORE MOVIES</button>
 </div>
 
 <section id="movies">
-
 <h2>Featured Movies 🎬</h2>
 
 <div class="movies">
 
 <div class="movie">
-
 <div class="poster">
 <img src="file_00000000f9b48210a87218812fee24f9.jpg"
 onerror="this.style.display='none'">
 </div>
-
 <h3>My Ex Wife</h3>
 <p>VICAZ Original</p>
-
-<button onclick="watchTrailer()">
-WATCH TRAILER
-</button>
-
-<button onclick="watchMovie('My Ex Wife')">
-WATCH NOW
-</button>
-
+<button onclick="watchTrailer()">WATCH TRAILER</button>
+<button onclick="watchMovie('My Ex Wife')">WATCH NOW</button>
 </div>
 
 <div class="movie">
 <div class="poster">❤️</div>
 <h3>Getto Love</h3>
 <p>Romance Drama</p>
-<button onclick="watchMovie('Getto Love')">
-WATCH NOW
-</button>
+<button onclick="watchMovie('Getto Love')">WATCH NOW</button>
 </div>
 
 <div class="movie">
 <div class="poster">🎭</div>
 <h3>Basuni</h3>
 <p>Coming Soon</p>
-<button onclick="alert('Basuni is coming soon!')">
-DETAILS
-</button>
+<button onclick="alert('Basuni is coming soon!')">DETAILS</button>
 </div>
 
 <div class="movie">
 <div class="poster">🍿</div>
 <h3>More Movies</h3>
 <p>Coming Soon</p>
-<button onclick="alert('New movies coming soon!')">
-EXPLORE
-</button>
+<button onclick="alert('More movies coming soon!')">EXPLORE</button>
 </div>
 
 </div>
 </section>
 
 <section id="plans">
-
 <h2>Our Payment Plans 💳</h2>
 
 <div class="price">
 <h3>Watch One Movie</h3>
 <h1>K15</h1>
 <p>Pay once and enjoy one movie.</p>
-<button onclick="showPayment()">
-CHOOSE K15
-</button>
+<button onclick="goTo('payment')">CHOOSE K15</button>
 </div>
 
 <div class="price">
 <h3>Monthly Subscription</h3>
 <h1>K40</h1>
 <p>Enjoy eligible movies for 30 days.</p>
-<button onclick="showPayment()">
-SUBSCRIBE K40
-</button>
+<button onclick="goTo('payment')">SUBSCRIBE K40</button>
 </div>
-
 </section>
 
 <section id="payment" class="price">
-
 <h2>VICAZ TV PAYMENT</h2>
-
 <p>Payment Method: Airtel Money</p>
-
 <h3>0778603979</h3>
-
 <p>Account Name: Benson Simuyemba</p>
-
 <p>After payment, contact VICAZ TV to confirm.</p>
-
-<button onclick="contactAdmin()">
-CONTACT VICAZ TV
-</button>
-
+<button onclick="contactAdmin()">CONTACT VICAZ TV</button>
 </section>
 
 <section id="account" class="account">
-
 <h2>VICAZ TV ACCOUNT</h2>
 
 <h3>Create Your Account</h3>
 
-<input id="signupEmail"
-type="email"
-placeholder="Your email">
+<input id="signupEmail" type="email"
+placeholder="Your email" autocomplete="email">
 
-<input id="signupPassword"
-type="password"
-placeholder="Create password">
+<input id="signupPassword" type="password"
+placeholder="Create password (at least 6 characters)"
+autocomplete="new-password">
 
-<br>
-
-<button onclick="signUp()">REGISTER</button>
+<button id="registerButton" onclick="signUp()">REGISTER</button>
 
 <hr>
 
 <h3>Already Have an Account?</h3>
 
-<input id="loginEmail"
-type="email"
-placeholder="Your email">
+<input id="loginEmail" type="email"
+placeholder="Your email" autocomplete="email">
 
-<input id="loginPassword"
-type="password"
-placeholder="Your password">
+<input id="loginPassword" type="password"
+placeholder="Your password" autocomplete="current-password">
 
-<br>
+<button id="loginButton" onclick="logIn()">LOGIN</button>
 
-<button onclick="logIn()">LOGIN</button>
-
-<p id="accountMessage"></p>
+<p id="accountMessage">Please register or log in.</p>
 
 <button onclick="logOut()">LOG OUT</button>
-
 </section>
 
 <section id="about">
-
 <h2>About VICAZ TV</h2>
-
-<p>
-VICAZ TV brings you African entertainment,
-original films, comedy and drama.
-</p>
-
-<p>
-Watch amazing movies from VICAZ MOVIES ENTERTAINMENT.
-</p>
-
+<p>VICAZ TV brings you African entertainment, original films, comedy and drama.</p>
+<p>Watch amazing movies from VICAZ MOVIES ENTERTAINMENT.</p>
 </section>
 
 <footer>
-
 <h3>🎬 VICAZ TV</h3>
-
 <p>Your Home of Entertainment</p>
-
 <p>Powered by VICAZ MOVIES ENTERTAINMENT</p>
-
 <p>© 2026 All Rights Reserved.</p>
-
 </footer>
 
 <nav class="bottom">
-
 <a href="#home">🏠 Home</a>
 <a href="#movies">🎬 Movies</a>
 <a href="#plans">💳 Plans</a>
 <a href="#account">👤 Account</a>
-
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-const client = supabase.createClient(
-'https://baqdstusvqljjowibjby.supabase.co',
-'sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY'
-);
-
-function watchTrailer(){
-
-window.open(
-'https://baqdstusvqljjowibjby.supabase.co/storage/v1/object/sign/Vicaz%20tv/VID_1791953483589.mp4?token=eyJraWQiOiJmMTBjYzhmMi0yYTQ1LTRlNzUtOGNiZi1hYzQ4YjQwZTNkYTIiLCJhbGciOiJFUzI1NiJ9.eyJ1cmwiOiJWaWNheiB0di9WSURfMTc5MTk1MzQ4MzU4OS5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzk1NTYwNTQ1LCJleHAiOjE4MDAxMzk3NDV9.kPNaG_sOM7Hf9BkoMFqAsW6sDMvFCC80Okpkv0HPjFPvkJjsWVObyc_8n9huDFBihLMOJ5Qrhzk8fsEnc1zpng',
-'_blank'
-);
-
-}
-
-function watchMovie(name){
-
-document.getElementById('payment').scrollIntoView();
-
-alert(name + ' costs K15. Please complete payment first.');
-
-}
-
-function showPayment(){
-
-document.getElementById('payment').scrollIntoView();
-
-}
-
-function contactAdmin(){
-
-window.open(
-'https://wa.me/260778603979',
-'_blank'
-);
-
-}
-
-async function signUp(){
-
-const email =
-document.getElementById('signupEmail').value;
-
-const password =
-document.getElementById('signupPassword').value;
-
-const {error} = await client.auth.signUp({
-email:email,
-password:password
-});
-
-document.getElementById('accountMessage').innerText =
-error ? error.message :
-'Registration successful! Check your email to confirm your account.';
-
-}
-
-async function logIn(){
-
-const email =
-document.getElementById('loginEmail').value;
-
-const password =
-document.getElementById('loginPassword').value;
-
-const {error} = await client.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-document.getElementById('accountMessage').innerText =
-error ? error.message :
-'Welcome to VICAZ TV! You are logged in.';
-
-}
-
-async function logOut(){
-
-const {error} = await client.auth.signOut();
-
-document.getElementById('accountMessage').innerText =
-error ? error.message :
-'You have logged out.';
-
-}
-
-</script>
-
-</body>
-</html>
+const SUPABASE_URL =
+'https://baqdstusvqljjowibjby.supabase.co';
