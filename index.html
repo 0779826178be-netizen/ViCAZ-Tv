@@ -13,19 +13,20 @@ header{background:#151515;padding:15px;display:flex;justify-content:space-betwee
 .logo img{width:145px;max-height:60px;object-fit:contain}
 nav{display:flex;gap:7px;flex-wrap:wrap}
 button{background:#c99b35;color:#111;border:0;padding:11px 13px;border-radius:5px;font-weight:bold;cursor:pointer;margin:3px}
-button:disabled{opacity:.5;cursor:not-allowed}
+button:disabled{opacity:.5}
 .secondary{background:#333;color:white}
+.danger{background:#a52828;color:white}
 section{display:none;padding:18px}
 section.active{display:block}
 .hero{padding:45px 15px;text-align:center;background:linear-gradient(120deg,#241b0c,#080808)}
 .hero h1,h2{color:#e5b84b}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px}
-.card{background:#181818;border:1px solid #333;border-radius:8px;overflow:hidden}
+.card,.request-card{background:#181818;border:1px solid #333;border-radius:8px;overflow:hidden;padding:12px}
 .card img{width:100%;height:190px;object-fit:cover}
 .card-content{padding:12px}
 .card h3{color:#e5b84b}
 .price{color:#e5b84b;font-weight:bold}
-.form{max-width:450px;margin:15px auto;background:#181818;padding:20px;border-radius:8px}
+.form{max-width:500px;margin:15px auto;background:#181818;padding:20px;border-radius:8px}
 input,textarea{width:100%;padding:13px;margin:7px 0;background:#171717;color:white;border:1px solid #555;border-radius:5px}
 textarea{min-height:80px}
 #message{padding:12px;color:#e5b84b}
@@ -34,31 +35,15 @@ video{width:100%;max-height:400px;background:black}
 .player-box{position:relative;width:100%;max-width:900px;margin:auto;aspect-ratio:16/9;background:black}
 .player-box iframe{width:100%;height:100%;border:0}
 footer{text-align:center;color:#888;padding:25px}
-
-#progressBox{
- display:none;
- margin-top:18px;
- background:#292929;
- padding:15px;
- border-radius:8px;
-}
-#progressTrack{
- width:100%;
- height:22px;
- background:#555;
- border-radius:20px;
- overflow:hidden;
-}
-#progressFill{
- width:0%;
- height:100%;
- background:#c99b35;
- transition:width .2s;
-}
-#progressText{
- color:#e5b84b;
- font-weight:bold;
-}
+#progressBox{display:none;margin-top:18px;background:#292929;padding:15px;border-radius:8px}
+#progressTrack{width:100%;height:22px;background:#555;border-radius:20px;overflow:hidden}
+#progressFill{width:0%;height:100%;background:#c99b35;transition:width .2s}
+#progressText{color:#e5b84b;font-weight:bold}
+.dashboard-section{margin-top:25px}
+.request-card{margin:10px 0}
+.request-card p{overflow-wrap:anywhere}
+.status{color:#e5b84b;font-weight:bold}
+hr{border-color:#444;margin:20px 0}
 </style>
 </head>
 
@@ -118,8 +103,7 @@ footer{text-align:center;color:#888;padding:25px}
  <div class="player-box">
   <iframe id="moviePlayer" src=""
    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-   allowfullscreen>
-  </iframe>
+   allowfullscreen></iframe>
  </div>
  <p id="watchDescription"></p>
  <p class="notice">Request full movie access for K15.</p>
@@ -128,10 +112,12 @@ footer{text-align:center;color:#888;padding:25px}
 </section>
 
 <section id="admin">
+
  <div class="form">
   <h2>VICAZ TV Admin</h2>
   <p id="adminStatus" class="notice">Administrator area</p>
 
+  <h3>Publish New Movie</h3>
   <input id="movieTitle" placeholder="Movie title">
   <textarea id="movieDescription" placeholder="Movie description"></textarea>
   <input id="moviePrice" type="number" value="15">
@@ -156,6 +142,25 @@ footer{text-align:center;color:#888;padding:25px}
 
   <p class="notice">Full movies are hosted on YouTube. Posters and trailers use Supabase storage.</p>
  </div>
+
+ <div class="dashboard-section">
+  <h2>Payment Dashboard</h2>
+  <p>Manage K15 movie payments and K40 subscriptions.</p>
+  <button onclick="loadPayments()">Refresh Payment Requests</button>
+
+  <h3>Pending Movie Payments - K15</h3>
+  <div id="purchaseRequests">
+   <p>Press Refresh Payment Requests to load requests.</p>
+  </div>
+
+  <hr>
+
+  <h3>Monthly Subscriptions - K40</h3>
+  <div id="subscriptionRequests">
+   <p>Press Refresh Payment Requests to load requests.</p>
+  </div>
+ </div>
+
 </section>
 
 <footer>
@@ -180,25 +185,30 @@ function message(text){
 
 function showPage(page){
  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
- const target=document.getElementById(page);
- if(target)target.classList.add("active");
+ document.getElementById(page).classList.add("active");
  window.scrollTo(0,0);
+}
+
+function isAdmin(){
+ return currentUser &&
+ currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
 }
 
 function updateAccount(){
  document.getElementById("userStatus").textContent=
  currentUser?"Logged in as "+currentUser.email:"You are not logged in.";
 
- const isAdmin=currentUser&&currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+ document.getElementById("adminButton").style.display=
+ isAdmin()?"inline-block":"none";
 
- document.getElementById("adminButton").style.display=isAdmin?"inline-block":"none";
  document.getElementById("adminStatus").textContent=
- isAdmin?"Administrator logged in.":"Please log in as administrator.";
+ isAdmin()?"Administrator logged in.":"Please log in as administrator.";
 }
 
 async function login(){
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
+
  if(!email||!password)return message("Enter your email and password.");
 
  const {data,error}=await db.auth.signInWithPassword({email,password});
@@ -208,12 +218,13 @@ async function login(){
  updateAccount();
  message("Login successful!");
 
- if(currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase())showPage("admin");
+ if(isAdmin())showPage("admin");
 }
 
 async function register(){
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
+
  if(!email||!password)return message("Enter your email and password.");
 
  const {error}=await db.auth.signUp({email,password});
@@ -249,8 +260,6 @@ async function getStorageUrl(path){
 }
 
 async function loadMovies(){
- if(!db)return;
-
  const {data,error}=await db.from("movies")
  .select("*").eq("is_published",true)
  .order("created_at",{ascending:false});
@@ -305,11 +314,9 @@ async function openMovie(id){
  document.getElementById("watchDescription").textContent=selectedMovie.description||"";
 
  const youtubeId=getYouTubeId(selectedMovie.video_url||"");
- const player=document.getElementById("moviePlayer");
 
- player.src=youtubeId?
- "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(youtubeId):
- "";
+ document.getElementById("moviePlayer").src=youtubeId?
+ "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(youtubeId):"";
 
  const trailerArea=document.getElementById("trailerArea");
  trailerArea.innerHTML="";
@@ -377,7 +384,6 @@ function updateProgress(percent){
 function uploadFileWithProgress(file,path,token,onProgress){
  return new Promise((resolve,reject)=>{
   const xhr=new XMLHttpRequest();
-
   const encodedPath=path.split("/").map(encodeURIComponent).join("/");
   const encodedBucket=encodeURIComponent(BUCKET);
 
@@ -390,9 +396,7 @@ function uploadFileWithProgress(file,path,token,onProgress){
   xhr.setRequestHeader("cache-control","3600");
 
   xhr.upload.addEventListener("progress",event=>{
-   if(event.lengthComputable){
-    onProgress(event.loaded/event.total);
-   }
+   if(event.lengthComputable)onProgress(event.loaded/event.total);
   });
 
   xhr.onload=()=>{
@@ -409,16 +413,12 @@ function uploadFileWithProgress(file,path,token,onProgress){
   };
 
   xhr.onerror=()=>reject(new Error("Network error during upload."));
-  xhr.onabort=()=>reject(new Error("Upload cancelled."));
-
   xhr.send(file);
  });
 }
 
 async function uploadMovie(){
- if(!currentUser||currentUser.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-  return message("Administrator login required.");
- }
+ if(!isAdmin())return message("Administrator login required.");
 
  const title=document.getElementById("movieTitle").value.trim();
  const description=document.getElementById("movieDescription").value;
@@ -434,49 +434,34 @@ async function uploadMovie(){
 
  const button=document.getElementById("uploadButton");
  button.disabled=true;
-
  updateProgress(0);
- message("Preparing upload...");
-
- const folder=Date.now().toString();
 
  try{
-  const {data:{session},error:sessionError}=await db.auth.getSession();
-
-  if(sessionError||!session)throw new Error("Please log in again.");
+  const {data:{session}}=await db.auth.getSession();
+  if(!session)throw new Error("Please log in again.");
 
   const files=trailer?[poster,trailer]:[poster];
   const totalBytes=files.reduce((sum,file)=>sum+file.size,0);
   let completedBytes=0;
+  const folder=Date.now().toString();
 
   async function upload(file,name){
    const path=folder+"/"+name;
-
    message("Uploading "+name+"...");
 
-   await uploadFileWithProgress(
-    file,
-    path,
-    session.access_token,
-    fraction=>{
-     const currentBytes=completedBytes+(file.size*fraction);
-     updateProgress((currentBytes/totalBytes)*100);
-    }
-   );
+   await uploadFileWithProgress(file,path,session.access_token,fraction=>{
+    updateProgress((completedBytes+file.size*fraction)/totalBytes*100);
+   });
 
    completedBytes+=file.size;
-   updateProgress((completedBytes/totalBytes)*100);
-
+   updateProgress(completedBytes/totalBytes*100);
    return path;
   }
 
   const posterPath=await upload(poster,"poster-"+poster.name);
-
   let trailerPath=null;
 
-  if(trailer){
-   trailerPath=await upload(trailer,"trailer-"+trailer.name);
-  }
+  if(trailer)trailerPath=await upload(trailer,"trailer-"+trailer.name);
 
   message("Saving movie details...");
 
@@ -510,6 +495,101 @@ async function uploadMovie(){
  }
 }
 
+/* PAYMENT DASHBOARD */
+
+async function loadPayments(){
+ if(!isAdmin())return message("Administrator login required.");
+
+ document.getElementById("purchaseRequests").innerHTML="<p>Loading...</p>";
+ document.getElementById("subscriptionRequests").innerHTML="<p>Loading...</p>";
+
+ const [purchaseResult,subscriptionResult,movieResult]=await Promise.all([
+  db.from("purchases").select("*").order("created_at",{ascending:false}),
+  db.from("subscriptions").select("*").order("created_at",{ascending:false}),
+  db.from("movies").select("id,title")
+ ]);
+
+ if(purchaseResult.error){
+  document.getElementById("purchaseRequests").textContent=purchaseResult.error.message;
+ }else{
+  const movieMap={};
+  (movieResult.data||[]).forEach(m=>movieMap[m.id]=m.title);
+
+  const requests=purchaseResult.data||[];
+
+  document.getElementById("purchaseRequests").innerHTML=requests.length?
+   requests.map(r=>`
+    <div class="request-card">
+     <h3>${escapeHTML(movieMap[r.movie_id]||"Movie")}</h3>
+     <p>Payment: K15</p>
+     <p>User ID: ${escapeHTML(r.user_id)}</p>
+     <p>Request ID: ${r.id}</p>
+     <p>Status: <span class="status">${escapeHTML(r.status)}</span></p>
+     <p>Date: ${escapeHTML(r.created_at)}</p>
+     ${r.status==="pending"?`
+      <button onclick="updatePurchase(${r.id},'approved')">Approve Payment</button>
+      <button class="danger" onclick="updatePurchase(${r.id},'rejected')">Reject</button>
+     `:""}
+    </div>
+   `).join(""):"<p>No movie payment requests yet.</p>";
+ }
+
+ if(subscriptionResult.error){
+  document.getElementById("subscriptionRequests").textContent=subscriptionResult.error.message;
+ }else{
+  const requests=subscriptionResult.data||[];
+
+  document.getElementById("subscriptionRequests").innerHTML=requests.length?
+   requests.map(r=>`
+    <div class="request-card">
+     <h3>Monthly Subscription</h3>
+     <p>Payment: K40</p>
+     <p>User ID: ${escapeHTML(r.user_id)}</p>
+     <p>Request ID: ${r.id}</p>
+     <p>Status: <span class="status">${escapeHTML(r.status)}</span></p>
+     <p>Expiry: ${escapeHTML(r.expires_at||"Not set")}</p>
+     <p>Date: ${escapeHTML(r.created_at)}</p>
+     ${r.status==="pending"?`
+      <button onclick="updateSubscription(${r.id},'approved')">Approve Payment</button>
+      <button class="danger" onclick="updateSubscription(${r.id},'rejected')">Reject</button>
+     `:""}
+    </div>
+   `).join(""):"<p>No subscription requests yet.</p>";
+ }
+}
+
+async function updatePurchase(id,status){
+ if(!isAdmin())return message("Administrator login required.");
+
+ const {error}=await db.from("purchases")
+ .update({status:status}).eq("id",id);
+
+ if(error)return message("Could not update payment: "+error.message);
+
+ message("Movie payment marked "+status+".");
+ await loadPayments();
+}
+
+async function updateSubscription(id,status){
+ if(!isAdmin())return message("Administrator login required.");
+
+ let updateData={status:status};
+
+ if(status==="approved"){
+  const expiry=new Date();
+  expiry.setDate(expiry.getDate()+30);
+  updateData.expires_at=expiry.toISOString();
+ }
+
+ const {error}=await db.from("subscriptions")
+ .update(updateData).eq("id",id);
+
+ if(error)return message("Could not update subscription: "+error.message);
+
+ message("Subscription marked "+status+".");
+ await loadPayments();
+}
+
 async function startApp(){
  try{
   if(!window.supabase){
@@ -538,5 +618,6 @@ async function startApp(){
 
 startApp();
 </script>
+
 </body>
 </html>
