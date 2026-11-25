@@ -4,20 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
 margin:0;
 background:#090909;
 color:white;
 font-family:Arial,sans-serif;
-padding-bottom:70px;
 }
-
 header{
 background:#171717;
 padding:18px;
@@ -25,38 +21,48 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 }
-
 .logo{
-font-size:23px;
+font-size:24px;
 font-weight:bold;
 color:#ffcc00;
 }
-
 nav{
-background:#222;
-padding:14px;
 display:flex;
 justify-content:space-around;
+background:#222;
+padding:12px;
 }
-
-nav a{
+nav button{
+background:transparent;
 color:white;
-text-decoration:none;
+border:0;
 font-weight:bold;
+padding:10px;
+cursor:pointer;
 }
-
+nav button.active{color:#ffcc00}
+.page{
+display:none;
+padding:20px;
+max-width:850px;
+margin:auto;
+}
+.page.active{display:block}
 .hero{
 background:linear-gradient(135deg,#161616,#4a0909);
 padding:40px 20px;
 text-align:center;
+border-radius:10px;
 }
-
-.hero h1{
-color:#ffcc00;
-font-size:30px;
+h1,h2{color:#ffcc00}
+.card,.payment{
+background:#191919;
+padding:18px;
+margin:18px 0;
+border-radius:10px;
 }
-
-button{
+.payment{border:1px solid #ffcc00}
+button.action{
 background:#ffcc00;
 color:black;
 border:0;
@@ -64,24 +70,8 @@ padding:13px 18px;
 border-radius:6px;
 font-weight:bold;
 cursor:pointer;
-margin:5px;
+margin:5px 0;
 }
-
-section{
-padding:20px;
-}
-
-.card{
-background:#191919;
-padding:18px;
-margin-bottom:18px;
-border-radius:10px;
-}
-
-.card h2{
-color:#ffcc00;
-}
-
 input{
 width:100%;
 padding:14px;
@@ -89,27 +79,17 @@ margin:8px 0;
 border:0;
 border-radius:5px;
 }
-
-.payment{
-background:#202020;
-padding:20px;
-border-radius:10px;
-border:1px solid #ffcc00;
-}
-
 .price{
-font-size:25px;
+font-size:24px;
 color:#ffcc00;
 font-weight:bold;
 }
-
-.hidden{display:none}
-
 footer{
 text-align:center;
 padding:20px;
 background:#171717;
 color:#aaa;
+margin-top:30px;
 }
 </style>
 </head>
@@ -122,28 +102,26 @@ color:#aaa;
 </header>
 
 <nav>
-<a href="#" onclick="show('home')">Home</a>
-<a href="#" onclick="show('movies')">Movies</a>
-<a href="#" onclick="show('account')">Account</a>
-<a href="#" onclick="show('admin')">Admin</a>
+<button class="active" onclick="showPage('home',this)">Home</button>
+<button onclick="showPage('movies',this)">Movies</button>
+<button onclick="showPage('account',this)">Account</button>
+<button onclick="showPage('admin',this)">Admin</button>
 </nav>
 
-<div id="home">
+<main>
+
+<section id="home" class="page active">
 <div class="hero">
 <h1>VICAZ TV</h1>
 <p>Your Home of Entertainment</p>
-<p>Watch African Movies, Drama and Comedy.</p>
-<button onclick="show('movies')">WATCH MOVIES</button>
+<p>African Movies, Drama and Comedy.</p>
+<button class="action" onclick="showPage('movies')">
+WATCH MOVIES
+</button>
 </div>
-
-<section>
-<h2>Welcome to VICAZ TV</h2>
-<p>Enjoy exciting African entertainment from VICAZ MOVIES ENTERTAINMENT.</p>
 </section>
-</div>
 
-<div id="movies" class="hidden">
-<section>
+<section id="movies" class="page">
 <h2>Latest Movies</h2>
 
 <div class="card">
@@ -151,44 +129,151 @@ color:#aaa;
 <p>Movie coming soon.</p>
 
 <h3>Trailer</h3>
-<video controls width="100%" id="trailer">
-</video>
+<p>Trailer coming soon.</p>
 
 <h3>Full Movie</h3>
 <p>Request full movie access for K15.</p>
 
-<button onclick="selectMovie()">
+<button class="action"
+onclick="openPayment('my ex wife',15)">
 Request Full Movie - K15
 </button>
 </div>
-
 </section>
-</div>
 
-<div id="account" class="hidden">
-<section>
+<section id="account" class="page">
 <h2>My Account</h2>
 
 <div class="card">
-<h3>Movie Access</h3>
-<p>Pay for individual movies or subscribe monthly.</p>
-
 <p class="price">K15 / Movie</p>
-<button onclick="payment('Movie')">Pay K15</button>
+
+<button class="action"
+onclick="openPayment('Single Movie',15)">
+Pay K15
+</button>
 
 <hr>
 
 <p class="price">K40 / Month</p>
-<button onclick="payment('Monthly Subscription')">Subscribe K40</button>
-</div>
 
+<button class="action"
+onclick="openPayment('Monthly Subscription',40)">
+Subscribe K40
+</button>
+</div>
 </section>
-</div>
 
-<div id="payment" class="hidden">
-<section>
+<section id="payment" class="page">
 <h2>Airtel Money Payment 🇿🇲</h2>
 
 <div class="payment">
 
-<h3>Send Money To
+<h3>Send Money To:</h3>
+<p>Network: Airtel Money</p>
+
+<h2>0778603979</h2>
+
+<p id="paymentDetails"></p>
+
+<p>1. Open Airtel Money.</p>
+<p>2. Send the required amount.</p>
+<p>3. Enter your transaction ID below.</p>
+
+<input id="customer" placeholder="Your Name">
+
+<input id="transaction"
+placeholder="Airtel Money Transaction ID">
+
+<button class="action" onclick="submitPayment()">
+SUBMIT PAYMENT
+</button>
+
+</div>
+</section>
+
+<section id="admin" class="page">
+<h2>Admin Information</h2>
+
+<div class="card">
+<p>Payment Network: Airtel Money</p>
+<p>Payment Number: 0778603979</p>
+<p>Movie Price: K15</p>
+<p>Monthly Subscription: K40</p>
+
+<p>Verify payments using your Airtel Money transaction records.</p>
+</div>
+</section>
+
+</main>
+
+<footer>
+VICAZ TV © 2026
+<br>
+Your Home of Entertainment
+</footer>
+
+<script>
+
+let selectedType = "";
+let selectedAmount = 15;
+
+function showPage(page,button){
+
+document.querySelectorAll(".page").forEach(function(section){
+section.classList.remove("active");
+});
+
+document.getElementById(page).classList.add("active");
+
+document.querySelectorAll("nav button").forEach(function(btn){
+btn.classList.remove("active");
+});
+
+if(button){
+button.classList.add("active");
+}
+
+window.scrollTo(0,0);
+}
+
+function openPayment(type,amount){
+
+selectedType = type;
+selectedAmount = amount;
+
+document.getElementById("paymentDetails").innerText =
+"Payment for: " + type + " | Amount: K" + amount;
+
+showPage("payment");
+
+}
+
+function submitPayment(){
+
+let name = document.getElementById("customer").value.trim();
+let transaction = document.getElementById("transaction").value.trim();
+
+if(name === "" || transaction === ""){
+alert("Please enter your name and transaction ID.");
+return;
+}
+
+let message =
+"VICAZ TV PAYMENT REQUEST\n" +
+"Name: " + name + "\n" +
+"Payment Type: " + selectedType + "\n" +
+"Amount: K" + selectedAmount + "\n" +
+"Transaction ID: " + transaction;
+
+let whatsapp =
+"https://wa.me/260778603979?text=" +
+encodeURIComponent(message);
+
+window.open(whatsapp,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
