@@ -6,292 +6,443 @@
 <meta name="theme-color" content="#090909">
 <title>VICAZ TV - Your Home of Entertainment</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
-
 body{
-margin:0;
-background:#090909;
-color:white;
-font-family:Arial,sans-serif;
-padding-bottom:70px;
+ margin:0;background:#090909;color:white;
+ font-family:Arial,sans-serif;padding-bottom:40px
 }
-
 header{
-background:#171717;
-padding:18px;
-position:sticky;
-top:0;
-z-index:10;
+ background:#151515;padding:16px;
+ display:flex;justify-content:space-between;
+ align-items:center;border-bottom:2px solid #c99b35;
+ position:sticky;top:0;z-index:10
 }
-
-.logo{
-color:#ffbd00;
-font-size:24px;
-font-weight:bold;
-}
-
-.hero{
-text-align:center;
-padding:55px 15px;
-background:linear-gradient(135deg,#000,#512300);
-}
-
-.hero h1{
-color:#ffbd00;
-font-size:36px;
-}
-
+.logo{font-size:23px;font-weight:bold;color:#e5b84b}
+nav{display:flex;gap:8px;flex-wrap:wrap}
 button{
-background:#ffbd00;
-color:black;
-border:0;
-padding:13px 18px;
-border-radius:5px;
-font-weight:bold;
-cursor:pointer;
-margin:5px;
+ background:#c99b35;color:#111;border:0;
+ padding:11px 14px;border-radius:5px;
+ font-weight:bold;cursor:pointer
 }
-
-button:disabled{
-opacity:.5;
+button:hover{background:#f0ca67}
+.secondary{background:#292929;color:white}
+section{padding:18px;display:none}
+section.active{display:block}
+.hero{
+ padding:45px 20px;text-align:center;
+ background:linear-gradient(120deg,#241b0c,#080808);
+ border-bottom:1px solid #a57b25
 }
-
-section{padding:20px}
-
-h2{color:#ffbd00}
-
-.movies{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
+.hero h1{font-size:34px;color:#e5b84b}
+.hero p{color:#ddd}
+h2{color:#e5b84b}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:15px
 }
-
-.movie{
-background:#202020;
-border-radius:9px;
-overflow:hidden;
-text-align:center;
-padding-bottom:15px;
+.card{
+ background:#181818;border:1px solid #333;
+ border-radius:8px;overflow:hidden
 }
-
-.poster{
-height:160px;
-background:linear-gradient(135deg,#551b00,#111);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:45px;
+.card img{
+ width:100%;height:190px;object-fit:cover;
+ background:#292929
 }
-
-.poster img{
-width:100%;
-height:100%;
-object-fit:cover;
+.card-content{padding:12px}
+.card h3{margin:5px 0;color:#e5b84b}
+.card p{font-size:13px;color:#ccc}
+.price{color:#e5b84b;font-weight:bold}
+input,textarea{
+ width:100%;padding:13px;margin:7px 0;
+ border:1px solid #555;border-radius:5px;
+ background:#171717;color:white
 }
-
-.movie h3{font-size:16px}
-
-.movie p{
-color:#aaa;
-font-size:13px;
+textarea{min-height:80px}
+.form{
+ max-width:450px;margin:15px auto;
+ background:#181818;padding:20px;border-radius:8px
 }
-
-.price{
-background:#202020;
-padding:20px;
-text-align:center;
-margin-bottom:15px;
-border-radius:8px;
-}
-
-.price h1{color:#ffbd00}
-
-.account{
-background:#171717;
-padding:25px;
-text-align:center;
-}
-
-input{
-display:block;
-padding:14px;
-margin:12px auto;
-width:95%;
-max-width:400px;
-border-radius:5px;
-border:0;
-}
-
-#accountMessage{
-color:#ffbd00;
-overflow-wrap:anywhere;
-}
-
-.bottom{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#171717;
-display:flex;
-justify-content:space-around;
-padding:15px 5px;
-z-index:20;
-}
-
-.bottom a{
-color:white;
-text-decoration:none;
-font-size:12px;
-}
-
-footer{
-text-align:center;
-padding:25px;
-color:#aaa;
-background:#171717;
-}
-
-@media(min-width:700px){
-.movies{grid-template-columns:repeat(4,1fr)}
-}
+.notice{color:#e5b84b;font-size:13px}
+#message{padding:12px;color:#e5b84b}
+video{width:100%;max-height:400px;background:black}
+footer{text-align:center;color:#888;padding:25px}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">🎬 VICAZ TV</div>
+ <div class="logo">VICAZ TV</div>
+ <nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('movies')">Movies</button>
+  <button onclick="showPage('account')">Account</button>
+ </nav>
 </header>
 
-<div class="hero" id="home">
-<h1>VICAZ TV</h1>
-<h2>Your Home of Entertainment</h2>
-<p>Discover African movies, drama and comedy.</p>
-<button onclick="goTo('movies')">EXPLORE MOVIES</button>
-</div>
+<div id="message"></div>
+
+<section id="home" class="active">
+ <div class="hero">
+  <h1>WELCOME TO VICAZ TV</h1>
+  <p>Your Home of Entertainment</p>
+  <p>Watch Zambian movies, comedy and more.</p>
+  <button onclick="showPage('movies')">WATCH MOVIES</button>
+ </div>
+
+ <h2>Featured Movies</h2>
+ <div id="featured" class="grid"></div>
+</section>
 
 <section id="movies">
-<h2>Featured Movies 🎬</h2>
-
-<div class="movies">
-
-<div class="movie">
-<div class="poster">
-<img src="file_00000000f9b48210a87218812fee24f9.jpg"
-onerror="this.style.display='none'">
-</div>
-<h3>My Ex Wife</h3>
-<p>VICAZ Original</p>
-<button onclick="watchTrailer()">WATCH TRAILER</button>
-<button onclick="watchMovie('My Ex Wife')">WATCH NOW</button>
-</div>
-
-<div class="movie">
-<div class="poster">❤️</div>
-<h3>Getto Love</h3>
-<p>Romance Drama</p>
-<button onclick="watchMovie('Getto Love')">WATCH NOW</button>
-</div>
-
-<div class="movie">
-<div class="poster">🎭</div>
-<h3>Basuni</h3>
-<p>Coming Soon</p>
-<button onclick="alert('Basuni is coming soon!')">DETAILS</button>
-</div>
-
-<div class="movie">
-<div class="poster">🍿</div>
-<h3>More Movies</h3>
-<p>Coming Soon</p>
-<button onclick="alert('More movies coming soon!')">EXPLORE</button>
-</div>
-
-</div>
+ <h2>Our Movies</h2>
+ <div id="movieList" class="grid"></div>
 </section>
 
-<section id="plans">
-<h2>Our Payment Plans 💳</h2>
+<section id="account">
+ <div class="form">
+  <h2>My Account</h2>
+  <p id="userStatus">You are not logged in.</p>
 
-<div class="price">
-<h3>Watch One Movie</h3>
-<h1>K15</h1>
-<p>Pay once and enjoy one movie.</p>
-<button onclick="goTo('payment')">CHOOSE K15</button>
-</div>
+  <input id="email" type="email" placeholder="Email address">
+  <input id="password" type="password" placeholder="Password">
 
-<div class="price">
-<h3>Monthly Subscription</h3>
-<h1>K40</h1>
-<p>Enjoy eligible movies for 30 days.</p>
-<button onclick="goTo('payment')">SUBSCRIBE K40</button>
-</div>
+  <button onclick="login()">Login</button>
+  <button onclick="register()" class="secondary">Register</button>
+  <button onclick="logout()" class="secondary">Logout</button>
+
+  <hr>
+  <h2>Monthly Subscription</h2>
+  <p class="price">K40 / 30 days</p>
+  <button onclick="subscribe()">Request Subscription</button>
+
+  <p class="notice">
+   Payment requests are pending until the administrator confirms payment.
+  </p>
+ </div>
 </section>
 
-<section id="payment" class="price">
-<h2>VICAZ TV PAYMENT</h2>
-<p>Payment Method: Airtel Money</p>
-<h3>0778603979</h3>
-<p>Account Name: Benson Simuyemba</p>
-<p>After payment, contact VICAZ TV to confirm.</p>
-<button onclick="contactAdmin()">CONTACT VICAZ TV</button>
+<section id="watch">
+ <h2 id="watchTitle">Movie</h2>
+ <video id="player" controls playsinline></video>
+ <p id="watchDescription"></p>
+ <p class="notice">Watch the trailer first. Pay to request access to the full movie.</p>
+ <button id="buyButton" onclick="buyMovie()">Request Full Movie - K15</button>
+ <button onclick="showPage('movies')" class="secondary">Back to Movies</button>
 </section>
 
-<section id="account" class="account">
-<h2>VICAZ TV ACCOUNT</h2>
+<section id="admin">
+ <div class="form">
+  <h2>Admin Upload</h2>
+  <p class="notice">Administrator access only.</p>
 
-<h3>Create Your Account</h3>
+  <input id="movieTitle" placeholder="Movie title">
+  <textarea id="movieDescription" placeholder="Movie description"></textarea>
+  <input id="moviePrice" type="number" value="15" placeholder="Price">
+  <label>Poster image</label>
+  <input id="posterFile" type="file" accept="image/*">
+  <label>Trailer video</label>
+  <input id="trailerFile" type="file" accept="video/*">
+  <label>Full movie video</label>
+  <input id="fullMovieFile" type="file" accept="video/*">
 
-<input id="signupEmail" type="email"
-placeholder="Your email" autocomplete="email">
-
-<input id="signupPassword" type="password"
-placeholder="Create password (at least 6 characters)"
-autocomplete="new-password">
-
-<button id="registerButton" onclick="signUp()">REGISTER</button>
-
-<hr>
-
-<h3>Already Have an Account?</h3>
-
-<input id="loginEmail" type="email"
-placeholder="Your email" autocomplete="email">
-
-<input id="loginPassword" type="password"
-placeholder="Your password" autocomplete="current-password">
-
-<button id="loginButton" onclick="logIn()">LOGIN</button>
-
-<p id="accountMessage">Please register or log in.</p>
-
-<button onclick="logOut()">LOG OUT</button>
-</section>
-
-<section id="about">
-<h2>About VICAZ TV</h2>
-<p>VICAZ TV brings you African entertainment, original films, comedy and drama.</p>
-<p>Watch amazing movies from VICAZ MOVIES ENTERTAINMENT.</p>
+  <button onclick="uploadMovie()">Upload Movie</button>
+ </div>
 </section>
 
 <footer>
-<h3>🎬 VICAZ TV</h3>
-<p>Your Home of Entertainment</p>
-<p>Powered by VICAZ MOVIES ENTERTAINMENT</p>
-<p>© 2026 All Rights Reserved.</p>
+ <p>VICAZ TV © 2026</p>
+ <p>Your Home of Entertainment</p>
 </footer>
 
-<nav class="bottom">
-<a href="#home">🏠 Home</a>
-<a href="#movies">🎬 Movies</a>
-<a href="#plans">💳 Plans</a>
-<a href="#account">👤 Account</a>
-</nav>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-const SUPABASE_URL =
-'https://baqdstusvqljjowibjby.supabase.co';
+const SUPABASE_URL = "https://baqdstusvqljjowibjby.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY";
+
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+const ADMIN_EMAIL = "bensonkanumba2000@gmail.com";
+const BUCKET = "vicaz movies";
+
+let currentUser = null;
+let selectedMovie = null;
+let movies = [];
+
+function message(text){
+ document.getElementById("message").textContent = text;
+}
+
+function showPage(page){
+ document.querySelectorAll("section").forEach(s=>{
+  s.classList.remove("active");
+ });
+ document.getElementById(page).classList.add("active");
+ window.scrollTo(0,0);
+}
+
+async function checkUser(){
+ const {data:{session}} = await db.auth.getSession();
+ currentUser = session ? session.user : null;
+ updateAccount();
+}
+
+function updateAccount(){
+ const status = document.getElementById("userStatus");
+ status.textContent = currentUser
+  ? "Logged in as " + currentUser.email
+  : "You are not logged in.";
+
+ if(currentUser && currentUser.email === ADMIN_EMAIL){
+  if(!document.getElementById("adminButton")){
+   const b = document.createElement("button");
+   b.id = "adminButton";
+   b.textContent = "Admin";
+   b.onclick = ()=>showPage("admin");
+   document.querySelector("nav").appendChild(b);
+  }
+ }else{
+  document.getElementById("adminButton")?.remove();
+ }
+}
+
+async function register(){
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
+
+ if(!email || !password){
+  message("Enter your email and password.");
+  return;
+ }
+
+ const {error} = await db.auth.signUp({email,password});
+
+ if(error) return message(error.message);
+
+ message("Registration submitted. You can now try logging in.");
+}
+
+async function login(){
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
+
+ if(!email || !password){
+  message("Enter your email and password.");
+  return;
+ }
+
+ const {data,error} = await db.auth.signInWithPassword({
+  email,password
+ });
+
+ if(error) return message(error.message);
+
+ currentUser = data.user;
+ updateAccount();
+ message("Login successful!");
+}
+
+async function logout(){
+ const {error} = await db.auth.signOut();
+ if(error) return message(error.message);
+
+ currentUser = null;
+ updateAccount();
+ message("You have logged out.");
+}
+
+async function loadMovies(){
+ const {data,error} = await db
+  .from("movies")
+  .select("*")
+  .eq("is_published",true)
+  .order("created_at",{ascending:false});
+
+ if(error){
+  message("Movie loading error: " + error.message);
+  return;
+ }
+
+ movies = data || [];
+
+ const html = movies.map(movie=>`
+  <div class="card">
+   <img src="${escapeHTML(movie.poster_url || '')}"
+    alt="${escapeHTML(movie.title || 'Movie poster')}">
+   <div class="card-content">
+    <h3>${escapeHTML(movie.title || 'Untitled')}</h3>
+    <p>${escapeHTML(movie.description || '')}</p>
+    <p class="price">K${Number(movie.price || 15)}</p>
+    <button onclick="openMovie('${movie.id}')">Watch Trailer</button>
+   </div>
+  </div>
+ `).join("");
+
+ document.getElementById("movieList").innerHTML =
+  html || "<p>No movies published yet.</p>";
+
+ document.getElementById("featured").innerHTML =
+  html || "<p>Movies coming soon.</p>";
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g, c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+async function getVideoUrl(path){
+ if(!path) return null;
+
+ if(path.startsWith("http://") || path.startsWith("https://")){
+  return path;
+ }
+
+ const {data,error} = await db.storage
+  .from(BUCKET)
+  .createSignedUrl(path,3600);
+
+ if(error){
+  message("Video access error: " + error.message);
+  return null;
+ }
+
+ return data.signedUrl;
+}
+
+async function openMovie(id){
+ selectedMovie = movies.find(m=>String(m.id)===String(id));
+ if(!selectedMovie) return;
+
+ showPage("watch");
+
+ document.getElementById("watchTitle").textContent =
+  selectedMovie.title;
+
+ document.getElementById("watchDescription").textContent =
+  selectedMovie.description || "";
+
+ const video = document.getElementById("player");
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+
+ const url = await getVideoUrl(selectedMovie.trailer_url);
+
+ if(url){
+  video.src = url;
+  video.load();
+ }else{
+  message("This movie has no trailer available yet.");
+ }
+}
+
+async function buyMovie(){
+ if(!currentUser){
+  message("Please log in before requesting a movie.");
+  showPage("account");
+  return;
+ }
+
+ if(!selectedMovie) return;
+
+ const {error} = await db.from("purchases").insert({
+  user_id:currentUser.id,
+  movie_id:selectedMovie.id,
+  status:"pending"
+ });
+
+ if(error) return message(error.message);
+
+ message("Your K15 movie payment request has been recorded. Contact the administrator to verify payment.");
+}
+
+async function subscribe(){
+ if(!currentUser){
+  message("Please log in first.");
+  showPage("account");
+  return;
+ }
+
+ const {error} = await db.from("subscriptions").insert({
+  user_id:currentUser.id,
+  status:"pending"
+ });
+
+ if(error) return message(error.message);
+
+ message("Your K40 subscription request has been recorded. It will be activated after payment verification.");
+}
+
+async function uploadMovie(){
+ if(!currentUser || currentUser.email !== ADMIN_EMAIL){
+  return message("Admin access only.");
+ }
+
+ const title = document.getElementById("movieTitle").value.trim();
+ const description = document.getElementById("movieDescription").value;
+ const price = Number(document.getElementById("moviePrice").value || 15);
+
+ const poster = document.getElementById("posterFile").files[0];
+ const trailer = document.getElementById("trailerFile").files[0];
+ const fullMovie = document.getElementById("fullMovieFile").files[0];
+
+ if(!title || !poster || !trailer || !fullMovie){
+  return message("Enter a title and select a poster, trailer and full movie.");
+ }
+
+ message("Uploading files. Please wait...");
+
+ const folder = Date.now().toString();
+
+ async function upload(file,name){
+  const path = folder + "/" + name;
+  const {error} = await db.storage.from(BUCKET).upload(path,file,{
+   upsert:false
+  });
+  if(error) throw error;
+  return path;
+ }
+
+ try{
+  const posterPath = await upload(poster,"poster-" + poster.name);
+  const trailerPath = await upload(trailer,"trailer-" + trailer.name);
+  const moviePath = await upload(fullMovie,"movie-" + fullMovie.name);
+
+  const {error} = await db.from("movies").insert({
+   title,
+   description,
+   price,
+   poster_url:posterPath,
+   trailer_url:trailerPath,
+   video_url:moviePath,
+   is_published:true
+  });
+
+  if(error) throw error;
+
+  message("Movie uploaded successfully!");
+  await loadMovies();
+
+ }catch(error){
+  message("Upload failed: " + error.message);
+ }
+}
+
+db.auth.onAuthStateChange((_event,session)=>{
+ currentUser = session ? session.user : null;
+ updateAccount();
+});
+
+checkUser();
+loadMovies();
+</script>
+
+</body>
+</html>
