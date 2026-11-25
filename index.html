@@ -1,82 +1,155 @@
-divvDOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
+
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;background:#090909;color:white;
- font-family:Arial,sans-serif;padding-bottom:40px
+ margin:0;
+ background:#090909;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding-bottom:40px
 }
+
 header{
- background:#151515;padding:16px;
- display:flex;justify-content:space-between;
- align-items:center;border-bottom:2px solid #c99b35;
- position:sticky;top:0;z-index:10
+ background:#151515;
+ padding:16px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ border-bottom:2px solid #c99b35;
+ position:sticky;
+ top:0;
+ z-index:10
 }
-.logo{font-size:23px;font-weight:bold;color:#e5b84b}
-nav{display:flex;gap:8px;flex-wrap:wrap}
+
+.logo img{
+ width:150px;
+ height:auto;
+ max-height:55px;
+ object-fit:contain;
+ display:block;
+}
+
+nav{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap
+}
+
 button{
- background:#c99b35;color:#111;border:0;
- padding:11px 14px;border-radius:5px;
- font-weight:bold;cursor:pointer
+ background:#c99b35;
+ color:#111;
+ border:0;
+ padding:11px 14px;
+ border-radius:5px;
+ font-weight:bold;
+ cursor:pointer
 }
+
 button:hover{background:#f0ca67}
 .secondary{background:#292929;color:white}
+
 section{padding:18px;display:none}
 section.active{display:block}
+
 .hero{
- padding:45px 20px;text-align:center;
+ padding:45px 20px;
+ text-align:center;
  background:linear-gradient(120deg,#241b0c,#080808);
  border-bottom:1px solid #a57b25
 }
+
 .hero h1{font-size:34px;color:#e5b84b}
 .hero p{color:#ddd}
 h2{color:#e5b84b}
+
 .grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
  gap:15px
 }
+
 .card{
- background:#181818;border:1px solid #333;
- border-radius:8px;overflow:hidden
+ background:#181818;
+ border:1px solid #333;
+ border-radius:8px;
+ overflow:hidden
 }
+
 .card img{
- width:100%;height:190px;object-fit:cover;
+ width:100%;
+ height:190px;
+ object-fit:cover;
  background:#292929
 }
+
 .card-content{padding:12px}
 .card h3{margin:5px 0;color:#e5b84b}
 .card p{font-size:13px;color:#ccc}
 .price{color:#e5b84b;font-weight:bold}
+
 input,textarea{
- width:100%;padding:13px;margin:7px 0;
- border:1px solid #555;border-radius:5px;
- background:#171717;color:white
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ border:1px solid #555;
+ border-radius:5px;
+ background:#171717;
+ color:white
 }
+
 textarea{min-height:80px}
+
 .form{
- max-width:450px;margin:15px auto;
- background:#181818;padding:20px;border-radius:8px
+ max-width:450px;
+ margin:15px auto;
+ background:#181818;
+ padding:20px;
+ border-radius:8px
 }
+
 .notice{color:#e5b84b;font-size:13px}
 #message{padding:12px;color:#e5b84b}
-video{width:100%;max-height:400px;background:black}
-footer{text-align:center;color:#888;padding:25px}
+
+video{
+ width:100%;
+ max-height:400px;
+ background:black
+}
+
+footer{
+ text-align:center;
+ color:#888;
+ padding:25px
+}
+
+@media(max-width:500px){
+ header{flex-wrap:wrap;gap:12px}
+ .logo img{width:120px}
+ nav{gap:5px}
+ button{padding:9px 10px}
+}
 </style>
 </head>
 
 <body>
 
-<header><di<div class="logo">
+<header>
+ <div class="logo">
   <img src="vicaz-logo.png" alt="VICAZ TV Logo">
-</div>
+ </div>
+
+ <nav>
   <button onclick="showPage('home')">Home</button>
   <button onclick="showPage('movies')">Movies</button>
   <button onclick="showPage('account')">Account</button>
@@ -115,6 +188,7 @@ footer{text-align:center;color:#888;padding:25px}
   <button onclick="logout()" class="secondary">Logout</button>
 
   <hr>
+
   <h2>Monthly Subscription</h2>
   <p class="price">K40 / 30 days</p>
   <button onclick="subscribe()">Request Subscription</button>
@@ -142,10 +216,13 @@ footer{text-align:center;color:#888;padding:25px}
   <input id="movieTitle" placeholder="Movie title">
   <textarea id="movieDescription" placeholder="Movie description"></textarea>
   <input id="moviePrice" type="number" value="15" placeholder="Price">
+
   <label>Poster image</label>
   <input id="posterFile" type="file" accept="image/*">
+
   <label>Trailer video</label>
   <input id="trailerFile" type="file" accept="video/*">
+
   <label>Full movie video</label>
   <input id="fullMovieFile" type="file" accept="video/*">
 
@@ -168,7 +245,7 @@ const db = window.supabase.createClient(
 );
 
 const ADMIN_EMAIL = "bensonkanumba2000@gmail.com";
- const BUCKET = "Vicaz tv";
+const BUCKET = "Vicaz tv";
 
 let currentUser = null;
 let selectedMovie = null;
@@ -194,6 +271,7 @@ async function checkUser(){
 
 function updateAccount(){
  const status = document.getElementById("userStatus");
+
  status.textContent = currentUser
   ? "Logged in as " + currentUser.email
   : "You are not logged in.";
@@ -249,11 +327,22 @@ async function login(){
 
 async function logout(){
  const {error} = await db.auth.signOut();
+
  if(error) return message(error.message);
 
  currentUser = null;
  updateAccount();
  message("You have logged out.");
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g, c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
 }
 
 async function loadMovies(){
@@ -274,6 +363,7 @@ async function loadMovies(){
   <div class="card">
    <img src="${escapeHTML(movie.poster_url || '')}"
     alt="${escapeHTML(movie.title || 'Movie poster')}">
+
    <div class="card-content">
     <h3>${escapeHTML(movie.title || 'Untitled')}</h3>
     <p>${escapeHTML(movie.description || '')}</p>
@@ -288,13 +378,6 @@ async function loadMovies(){
 
  document.getElementById("featured").innerHTML =
   html || "<p>Movies coming soon.</p>";
-}
-
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g, c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#39;"
- }[c]));
 }
 
 async function getVideoUrl(path){
@@ -318,6 +401,7 @@ async function getVideoUrl(path){
 
 async function openMovie(id){
  selectedMovie = movies.find(m=>String(m.id)===String(id));
+
  if(!selectedMovie) return;
 
  showPage("watch");
@@ -329,6 +413,7 @@ async function openMovie(id){
   selectedMovie.description || "";
 
  const video = document.getElementById("player");
+
  video.pause();
  video.removeAttribute("src");
  video.load();
@@ -403,10 +488,13 @@ async function uploadMovie(){
 
  async function upload(file,name){
   const path = folder + "/" + name;
+
   const {error} = await db.storage.from(BUCKET).upload(path,file,{
    upsert:false
   });
+
   if(error) throw error;
+
   return path;
  }
 
