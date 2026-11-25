@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -12,72 +11,56 @@
 *{box-sizing:border-box}
 body{
  margin:0;background:#090909;color:white;
- font-family:Arial,sans-serif;padding-bottom:40px
+ font-family:Arial,sans-serif;padding-bottom:30px
 }
 header{
- background:#151515;padding:16px;
+ background:#151515;padding:15px;
  display:flex;justify-content:space-between;
- align-items:center;border-bottom:2px solid #c99b35;
+ align-items:center;flex-wrap:wrap;gap:12px;
+ border-bottom:2px solid #c99b35;
  position:sticky;top:0;z-index:10
 }
-.logo img{
- width:150px;height:auto;max-height:55px;
- object-fit:contain;display:block
-}
-nav{display:flex;gap:8px;flex-wrap:wrap}
+.logo img{width:145px;max-height:60px;object-fit:contain}
+nav{display:flex;gap:7px;flex-wrap:wrap}
 button{
  background:#c99b35;color:#111;border:0;
- padding:11px 14px;border-radius:5px;
+ padding:11px 13px;border-radius:5px;
  font-weight:bold;cursor:pointer
 }
 button:hover{background:#f0ca67}
-.secondary{background:#292929;color:white}
-section{padding:18px;display:none}
+.secondary{background:#333;color:white}
+section{display:none;padding:18px}
 section.active{display:block}
 .hero{
- padding:45px 20px;text-align:center;
+ padding:45px 15px;text-align:center;
  background:linear-gradient(120deg,#241b0c,#080808);
  border-bottom:1px solid #a57b25
 }
-.hero h1{font-size:34px;color:#e5b84b}
-.hero p{color:#ddd}
-h2{color:#e5b84b}
+.hero h1,h2{color:#e5b84b}
 .grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
  gap:15px
 }
-.card{
- background:#181818;border:1px solid #333;
- border-radius:8px;overflow:hidden
-}
-.card img{
- width:100%;height:190px;object-fit:cover;background:#292929
-}
+.card{background:#181818;border:1px solid #333;border-radius:8px;overflow:hidden}
+.card img{width:100%;height:190px;object-fit:cover}
 .card-content{padding:12px}
-.card h3{margin:5px 0;color:#e5b84b}
-.card p{font-size:13px;color:#ccc}
+.card h3{color:#e5b84b}
 .price{color:#e5b84b;font-weight:bold}
-input,textarea{
- width:100%;padding:13px;margin:7px 0;
- border:1px solid #555;border-radius:5px;
- background:#171717;color:white
-}
-textarea{min-height:80px}
 .form{
  max-width:450px;margin:15px auto;
  background:#181818;padding:20px;border-radius:8px
 }
-.notice{color:#e5b84b;font-size:13px}
+input,textarea{
+ width:100%;padding:13px;margin:7px 0;
+ background:#171717;color:white;border:1px solid #555;
+ border-radius:5px
+}
+textarea{min-height:80px}
 #message{padding:12px;color:#e5b84b}
+.notice{color:#e5b84b;font-size:13px}
 video{width:100%;max-height:400px;background:black}
 footer{text-align:center;color:#888;padding:25px}
-
-@media(max-width:500px){
- header{flex-wrap:wrap;gap:12px}
- .logo img{width:120px}
- nav{gap:5px}
- button{padding:9px 10px}
-}
 </style>
 </head>
 
@@ -85,12 +68,15 @@ footer{text-align:center;color:#888;padding:25px}
 
 <header>
  <div class="logo">
-  <img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png" alt="VICAZ TV Logo">
+  <img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
+  alt="VICAZ TV Logo">
  </div>
+
  <nav>
   <button onclick="showPage('home')">Home</button>
   <button onclick="showPage('movies')">Movies</button>
   <button onclick="showPage('account')">Account</button>
+  <button id="adminButton" onclick="showPage('admin')" style="display:none">Admin</button>
  </nav>
 </header>
 
@@ -116,16 +102,19 @@ footer{text-align:center;color:#888;padding:25px}
  <div class="form">
   <h2>My Account</h2>
   <p id="userStatus">You are not logged in.</p>
+
   <input id="email" type="email" placeholder="Email address">
   <input id="password" type="password" placeholder="Password">
+
   <button onclick="login()">Login</button>
   <button onclick="register()" class="secondary">Register</button>
   <button onclick="logout()" class="secondary">Logout</button>
+
   <hr>
   <h2>Monthly Subscription</h2>
   <p class="price">K40 / 30 days</p>
   <button onclick="subscribe()">Request Subscription</button>
-  <p class="notice">Payment requests are pending until the administrator confirms payment.</p>
+  <p class="notice">Payment requests require administrator verification.</p>
  </div>
 </section>
 
@@ -133,14 +122,296 @@ footer{text-align:center;color:#888;padding:25px}
  <h2 id="watchTitle">Movie</h2>
  <video id="player" controls playsinline></video>
  <p id="watchDescription"></p>
- <p class="notice">Watch the trailer first. Pay to request access to the full movie.</p>
+ <p class="notice">Watch the trailer first. Request full movie access for K15.</p>
  <button onclick="buyMovie()">Request Full Movie - K15</button>
  <button onclick="showPage('movies')" class="secondary">Back to Movies</button>
 </section>
 
 <section id="admin">
  <div class="form">
-  <h2>Admin Upload</h2>
-  <p class="notice">Administrator access only.</p>
+  <h2>VICAZ TV Admin</h2>
+  <p id="adminStatus" class="notice">Administrator area</p>
+
   <input id="movieTitle" placeholder="Movie title">
-  <textarea id="movieDescription" placeholder
+  <textarea id="movieDescription" placeholder="Movie description"></textarea>
+  <input id="moviePrice" type="number" value="15">
+
+  <label>Movie poster</label>
+  <input id="posterFile" type="file" accept="image/*">
+
+  <label>Movie trailer</label>
+  <input id="trailerFile" type="file" accept="video/*">
+
+  <label>Full movie</label>
+  <input id="fullMovieFile" type="file" accept="video/*">
+
+  <button onclick="uploadMovie()">Upload Movie</button>
+ </div>
+</section>
+
+<footer>
+ <p>VICAZ TV © 2026</p>
+ <p>Your Home of Entertainment</p>
+</footer>
+
+<script>
+const SUPABASE_URL="https://baqdstusvqljjowibjby.supabase.co";
+const SUPABASE_KEY="sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY";
+const ADMIN_EMAIL="bensonkanumba2000@gmail.com";
+const BUCKET="Vicaz tv";
+
+let db=null;
+let currentUser=null;
+let selectedMovie=null;
+let movies=[];
+
+function message(text){
+ document.getElementById("message").textContent=text;
+}
+
+function showPage(page){
+ document.querySelectorAll("section").forEach(s=>{
+  s.classList.remove("active");
+ });
+ const target=document.getElementById(page);
+ if(target) target.classList.add("active");
+ window.scrollTo(0,0);
+}
+
+function updateAccount(){
+ document.getElementById("userStatus").textContent=
+ currentUser ? "Logged in as "+currentUser.email : "You are not logged in.";
+
+ const isAdmin=currentUser &&
+ currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+
+ document.getElementById("adminButton").style.display=
+ isAdmin ? "inline-block" : "none";
+
+ document.getElementById("adminStatus").textContent=
+ isAdmin ? "Administrator logged in." : "Please log in as administrator.";
+}
+
+async function login(){
+ if(!db)return message("Connection unavailable. Refresh the website.");
+
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password)return message("Enter your email and password.");
+
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error)return message(error.message);
+
+ currentUser=data.user;
+ updateAccount();
+ message("Login successful!");
+
+ if(currentUser.email===ADMIN_EMAIL) showPage("admin");
+}
+
+async function register(){
+ if(!db)return message("Connection unavailable.");
+
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password)return message("Enter your email and password.");
+
+ const {error}=await db.auth.signUp({email,password});
+ if(error)return message(error.message);
+
+ message("Registration submitted. You can now try logging in.");
+}
+
+async function logout(){
+ if(!db)return;
+
+ const {error}=await db.auth.signOut();
+ if(error)return message(error.message);
+
+ currentUser=null;
+ updateAccount();
+ showPage("home");
+ message("You have logged out.");
+}
+
+function escapeHTML(value){
+ return String(value||"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+async function loadMovies(){
+ if(!db)return;
+
+ const {data,error}=await db.from("movies")
+ .select("*").eq("is_published",true)
+ .order("created_at",{ascending:false});
+
+ if(error)return message("Movie loading error: "+error.message);
+
+ movies=data||[];
+
+ const html=movies.map(movie=>`
+ <div class="card">
+  <img src="${escapeHTML(movie.poster_url)}" alt="Movie poster">
+  <div class="card-content">
+   <h3>${escapeHTML(movie.title)}</h3>
+   <p>${escapeHTML(movie.description)}</p>
+   <p class="price">K${Number(movie.price||15)}</p>
+   <button onclick="openMovie('${movie.id}')">Watch Trailer</button>
+  </div>
+ </div>`).join("");
+
+ document.getElementById("movieList").innerHTML=html||"<p>No movies published yet.</p>";
+ document.getElementById("featured").innerHTML=html||"<p>Movies coming soon.</p>";
+}
+
+async function getVideoUrl(path){
+ if(!path)return null;
+ if(path.startsWith("http"))return path;
+
+ const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
+ if(error){
+  message("Video access error: "+error.message);
+  return null;
+ }
+ return data.signedUrl;
+}
+
+async function openMovie(id){
+ selectedMovie=movies.find(m=>String(m.id)===String(id));
+ if(!selectedMovie)return;
+
+ showPage("watch");
+ document.getElementById("watchTitle").textContent=selectedMovie.title;
+ document.getElementById("watchDescription").textContent=selectedMovie.description||"";
+
+ const player=document.getElementById("player");
+ player.pause();
+ player.removeAttribute("src");
+ player.load();
+
+ const url=await getVideoUrl(selectedMovie.trailer_url);
+ if(url){
+  player.src=url;
+  player.load();
+ }else{
+  message("Trailer is not available.");
+ }
+}
+
+async function buyMovie(){
+ if(!currentUser){
+  message("Please log in first.");
+  showPage("account");
+  return;
+ }
+ if(!selectedMovie)return;
+
+ const {error}=await db.from("purchases").insert({
+  user_id:currentUser.id,
+  movie_id:selectedMovie.id,
+  status:"pending"
+ });
+
+ if(error)return message(error.message);
+ message("K15 payment request recorded. Contact the administrator to verify payment.");
+}
+
+async function subscribe(){
+ if(!currentUser){
+  message("Please log in first.");
+  showPage("account");
+  return;
+ }
+
+ const {error}=await db.from("subscriptions").insert({
+  user_id:currentUser.id,
+  status:"pending"
+ });
+
+ if(error)return message(error.message);
+ message("K40 subscription request recorded. Await payment verification.");
+}
+
+async function uploadMovie(){
+ if(!currentUser||currentUser.email!==ADMIN_EMAIL){
+  return message("Administrator login required.");
+ }
+
+ const title=document.getElementById("movieTitle").value.trim();
+ const description=document.getElementById("movieDescription").value;
+ const price=Number(document.getElementById("moviePrice").value||15);
+ const poster=document.getElementById("posterFile").files[0];
+ const trailer=document.getElementById("trailerFile").files[0];
+ const fullMovie=document.getElementById("fullMovieFile").files[0];
+
+ if(!title||!poster||!trailer||!fullMovie){
+  return message("Enter a title and select all three files.");
+ }
+
+ message("Uploading. Please wait...");
+ const folder=Date.now().toString();
+
+ async function upload(file,name){
+  const path=folder+"/"+name;
+  const {error}=await db.storage.from(BUCKET).upload(path,file);
+  if(error)throw error;
+  return path;
+ }
+
+ try{
+  const posterPath=await upload(poster,"poster-"+poster.name);
+  const trailerPath=await upload(trailer,"trailer-"+trailer.name);
+  const moviePath=await upload(fullMovie,"movie-"+fullMovie.name);
+
+  const {error}=await db.from("movies").insert({
+   title,description,price,
+   poster_url:posterPath,
+   trailer_url:trailerPath,
+   video_url:moviePath,
+   is_published:true
+  });
+
+  if(error)throw error;
+
+  message("Movie uploaded successfully!");
+  await loadMovies();
+
+ }catch(error){
+  message("Upload failed: "+error.message);
+ }
+}
+
+async function startApp(){
+ try{
+  if(!window.supabase){
+   message("Website connection library did not load. Check your internet and refresh.");
+   return;
+  }
+
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await db.auth.getSession();
+  currentUser=session?session.user:null;
+  updateAccount();
+
+  db.auth.onAuthStateChange((_event,session)=>{
+   currentUser=session?session.user:null;
+   updateAccount();
+  });
+
+  await loadMovies();
+
+ }catch(error){
+  message("Website error: "+error.message);
+ }
+}
+
+startApp();
+</script>
+
+</body>
+</html>
