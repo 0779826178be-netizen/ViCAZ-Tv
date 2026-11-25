@@ -6,6 +6,7 @@
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -25,9 +26,10 @@ nav{display:flex;gap:7px;flex-wrap:wrap}
 button{
  background:#c99b35;color:#111;border:0;
  padding:11px 13px;border-radius:5px;
- font-weight:bold;cursor:pointer
+ font-weight:bold;cursor:pointer;margin:3px
 }
 button:hover{background:#f0ca67}
+button:disabled{opacity:.5;cursor:not-allowed}
 .secondary{background:#333;color:white}
 section{display:none;padding:18px}
 section.active{display:block}
@@ -42,7 +44,10 @@ section.active{display:block}
  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
  gap:15px
 }
-.card{background:#181818;border:1px solid #333;border-radius:8px;overflow:hidden}
+.card{
+ background:#181818;border:1px solid #333;
+ border-radius:8px;overflow:hidden
+}
 .card img{width:100%;height:190px;object-fit:cover}
 .card-content{padding:12px}
 .card h3{color:#e5b84b}
@@ -60,6 +65,15 @@ textarea{min-height:80px}
 #message{padding:12px;color:#e5b84b}
 .notice{color:#e5b84b;font-size:13px}
 video{width:100%;max-height:400px;background:black}
+.progress-box{
+ display:none;margin-top:15px;background:#333;
+ border-radius:8px;overflow:hidden;height:24px
+}
+#progressBar{
+ width:0%;height:100%;background:#c99b35;
+ transition:width .2s
+}
+#progressText{text-align:center;margin-top:8px;color:#e5b84b}
 footer{text-align:center;color:#888;padding:25px}
 </style>
 </head>
@@ -71,7 +85,6 @@ footer{text-align:center;color:#888;padding:25px}
   <img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
   alt="VICAZ TV Logo">
  </div>
-
  <nav>
   <button onclick="showPage('home')">Home</button>
   <button onclick="showPage('movies')">Movies</button>
@@ -102,14 +115,11 @@ footer{text-align:center;color:#888;padding:25px}
  <div class="form">
   <h2>My Account</h2>
   <p id="userStatus">You are not logged in.</p>
-
   <input id="email" type="email" placeholder="Email address">
   <input id="password" type="password" placeholder="Password">
-
   <button onclick="login()">Login</button>
   <button onclick="register()" class="secondary">Register</button>
   <button onclick="logout()" class="secondary">Logout</button>
-
   <hr>
   <h2>Monthly Subscription</h2>
   <p class="price">K40 / 30 days</p>
@@ -122,7 +132,7 @@ footer{text-align:center;color:#888;padding:25px}
  <h2 id="watchTitle">Movie</h2>
  <video id="player" controls playsinline></video>
  <p id="watchDescription"></p>
- <p class="notice">Watch the trailer first. Request full movie access for K15.</p>
+ <p class="notice">Request full movie access for K15.</p>
  <button onclick="buyMovie()">Request Full Movie - K15</button>
  <button onclick="showPage('movies')" class="secondary">Back to Movies</button>
 </section>
@@ -145,7 +155,12 @@ footer{text-align:center;color:#888;padding:25px}
   <label>Full movie</label>
   <input id="fullMovieFile" type="file" accept="video/*">
 
-  <button onclick="uploadMovie()">Upload Movie</button>
+  <button id="uploadButton" onclick="uploadMovie()">Upload Movie</button>
+
+  <div class="progress-box" id="progressBox">
+   <div id="progressBar"></div>
+  </div>
+  <p id="progressText">Waiting for upload...</p>
  </div>
 </section>
 
@@ -174,62 +189,52 @@ function showPage(page){
   s.classList.remove("active");
  });
  const target=document.getElementById(page);
- if(target) target.classList.add("active");
+ if(target)target.classList.add("active");
  window.scrollTo(0,0);
 }
 
 function updateAccount(){
  document.getElementById("userStatus").textContent=
- currentUser ? "Logged in as "+currentUser.email : "You are not logged in.";
+ currentUser?"Logged in as "+currentUser.email:"You are not logged in.";
 
- const isAdmin=currentUser &&
+ const isAdmin=currentUser&&
  currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
 
  document.getElementById("adminButton").style.display=
- isAdmin ? "inline-block" : "none";
+ isAdmin?"inline-block":"none";
 
  document.getElementById("adminStatus").textContent=
- isAdmin ? "Administrator logged in." : "Please log in as administrator.";
+ isAdmin?"Administrator logged in.":"Please log in as administrator.";
 }
 
 async function login(){
  if(!db)return message("Connection unavailable. Refresh the website.");
-
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
-
  if(!email||!password)return message("Enter your email and password.");
 
  const {data,error}=await db.auth.signInWithPassword({email,password});
  if(error)return message(error.message);
-
  currentUser=data.user;
  updateAccount();
  message("Login successful!");
-
- if(currentUser.email===ADMIN_EMAIL) showPage("admin");
+ if(currentUser.email===ADMIN_EMAIL)showPage("admin");
 }
 
 async function register(){
- if(!db)return message("Connection unavailable.");
-
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
-
  if(!email||!password)return message("Enter your email and password.");
 
  const {error}=await db.auth.signUp({email,password});
  if(error)return message(error.message);
-
  message("Registration submitted. You can now try logging in.");
 }
 
 async function logout(){
  if(!db)return;
-
  const {error}=await db.auth.signOut();
  if(error)return message(error.message);
-
  currentUser=null;
  updateAccount();
  showPage("home");
@@ -244,13 +249,11 @@ function escapeHTML(value){
 
 async function loadMovies(){
  if(!db)return;
-
  const {data,error}=await db.from("movies")
  .select("*").eq("is_published",true)
  .order("created_at",{ascending:false});
 
  if(error)return message("Movie loading error: "+error.message);
-
  movies=data||[];
 
  const html=movies.map(movie=>`
@@ -315,7 +318,6 @@ async function buyMovie(){
   movie_id:selectedMovie.id,
   status:"pending"
  });
-
  if(error)return message(error.message);
  message("K15 payment request recorded. Contact the administrator to verify payment.");
 }
@@ -326,18 +328,56 @@ async function subscribe(){
   showPage("account");
   return;
  }
-
  const {error}=await db.from("subscriptions").insert({
-  user_id:currentUser.id,
-  status:"pending"
+  user_id:currentUser.id,status:"pending"
  });
-
  if(error)return message(error.message);
  message("K40 subscription request recorded. Await payment verification.");
 }
 
+/* Resumable upload using TUS */
+function resumableUpload(file,path,accessToken,onProgress){
+ return new Promise((resolve,reject)=>{
+  const upload=new tus.Upload(file,{
+   endpoint:SUPABASE_URL+"/storage/v1/upload/resumable",
+   retryDelays:[0,3000,5000,10000,20000],
+   headers:{
+    authorization:"Bearer "+accessToken,
+    apikey:SUPABASE_KEY,
+    "x-upsert":"false"
+   },
+   metadata:{
+    bucketName:BUCKET,
+    objectName:path,
+    contentType:file.type||"application/octet-stream",
+    cacheControl:"3600"
+   },
+   chunkSize:6*1024*1024,
+
+   onError(error){
+    reject(error);
+   },
+
+   onProgress(bytesUploaded,bytesTotal){
+    onProgress(bytesUploaded,bytesTotal);
+   },
+
+   onSuccess(){
+    resolve(path);
+   }
+  });
+
+  upload.findPreviousUploads().then(previous=>{
+   if(previous.length){
+    upload.resumeFromPreviousUpload(previous[0]);
+   }
+   upload.start();
+  }).catch(reject);
+ });
+}
+
 async function uploadMovie(){
- if(!currentUser||currentUser.email!==ADMIN_EMAIL){
+ if(!currentUser||currentUser.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
   return message("Administrator login required.");
  }
 
@@ -352,23 +392,70 @@ async function uploadMovie(){
   return message("Enter a title and select all three files.");
  }
 
- message("Uploading. Please wait...");
+ if(!navigator.onLine){
+  return message("You are offline. Connect to the internet first.");
+ }
+
+ const button=document.getElementById("uploadButton");
+ const progressBox=document.getElementById("progressBox");
+ const progressBar=document.getElementById("progressBar");
+ const progressText=document.getElementById("progressText");
+
+ button.disabled=true;
+ progressBox.style.display="block";
+ progressBar.style.width="0%";
+ progressText.textContent="Starting upload...";
+
+ const totalBytes=poster.size+trailer.size+fullMovie.size;
+ let completedBytes=0;
+
+ function updateProgress(fileBytes,totalFileBytes){
+  const overall=completedBytes+fileBytes;
+  const percent=Math.min(100,Math.round(overall/totalBytes*100));
+  progressBar.style.width=percent+"%";
+  progressText.textContent="Uploading: "+percent+"%";
+ }
+
  const folder=Date.now().toString();
 
- async function upload(file,name){
+ async function uploadFile(file,name,isVideo){
   const path=folder+"/"+name;
-  const {error}=await db.storage.from(BUCKET).upload(path,file);
-  if(error)throw error;
+
+  if(isVideo){
+   const {data:{session},error}=await db.auth.getSession();
+   if(error||!session)throw new Error("Your login session has expired. Log in again.");
+
+   await resumableUpload(file,path,session.access_token,(sent,total)=>{
+    updateProgress(sent,total);
+   });
+  }else{
+   const {error}=await db.storage.from(BUCKET).upload(path,file,{
+    contentType:file.type,
+    cacheControl:"3600",
+    upsert:false
+   });
+   if(error)throw error;
+   updateProgress(file.size,file.size);
+  }
+
+  completedBytes+=file.size;
   return path;
  }
 
  try{
-  const posterPath=await upload(poster,"poster-"+poster.name);
-  const trailerPath=await upload(trailer,"trailer-"+trailer.name);
-  const moviePath=await upload(fullMovie,"movie-"+fullMovie.name);
+  message("Uploading movie files. Keep this page open.");
+
+  const posterPath=await uploadFile(poster,"poster-"+poster.name,false);
+  const trailerPath=await uploadFile(trailer,"trailer-"+trailer.name,true);
+  const moviePath=await uploadFile(fullMovie,"movie-"+fullMovie.name,true);
+
+  progressBar.style.width="100%";
+  progressText.textContent="Saving movie details...";
 
   const {error}=await db.from("movies").insert({
-   title,description,price,
+   title:title,
+   description:description,
+   price:price,
    poster_url:posterPath,
    trailer_url:trailerPath,
    video_url:moviePath,
@@ -377,18 +464,33 @@ async function uploadMovie(){
 
   if(error)throw error;
 
+  progressText.textContent="Upload complete: 100%";
   message("Movie uploaded successfully!");
+  document.getElementById("movieTitle").value="";
+  document.getElementById("movieDescription").value="";
+  document.getElementById("posterFile").value="";
+  document.getElementById("trailerFile").value="";
+  document.getElementById("fullMovieFile").value="";
+
   await loadMovies();
 
  }catch(error){
   message("Upload failed: "+error.message);
+  progressText.textContent="Upload failed. Check the message above.";
+ }finally{
+  button.disabled=false;
  }
 }
 
 async function startApp(){
  try{
   if(!window.supabase){
-   message("Website connection library did not load. Check your internet and refresh.");
+   message("Connection library did not load. Check your internet and refresh.");
+   return;
+  }
+
+  if(!window.tus){
+   message("Upload library did not load. Refresh the website.");
    return;
   }
 
