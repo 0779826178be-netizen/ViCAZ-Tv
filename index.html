@@ -13,6 +13,7 @@ header{background:#151515;padding:15px;display:flex;justify-content:space-betwee
 .logo img{width:145px;max-height:60px;object-fit:contain}
 nav{display:flex;gap:7px;flex-wrap:wrap}
 button{background:#c99b35;color:#111;border:0;padding:11px 13px;border-radius:5px;font-weight:bold;cursor:pointer;margin:3px}
+button:disabled{opacity:.5;cursor:not-allowed}
 .secondary{background:#333;color:white}
 section{display:none;padding:18px}
 section.active{display:block}
@@ -33,6 +34,31 @@ video{width:100%;max-height:400px;background:black}
 .player-box{position:relative;width:100%;max-width:900px;margin:auto;aspect-ratio:16/9;background:black}
 .player-box iframe{width:100%;height:100%;border:0}
 footer{text-align:center;color:#888;padding:25px}
+
+#progressBox{
+ display:none;
+ margin-top:18px;
+ background:#292929;
+ padding:15px;
+ border-radius:8px;
+}
+#progressTrack{
+ width:100%;
+ height:22px;
+ background:#555;
+ border-radius:20px;
+ overflow:hidden;
+}
+#progressFill{
+ width:0%;
+ height:100%;
+ background:#c99b35;
+ transition:width .2s;
+}
+#progressText{
+ color:#e5b84b;
+ font-weight:bold;
+}
 </style>
 </head>
 
@@ -90,8 +116,7 @@ footer{text-align:center;color:#888;padding:25px}
  <div id="trailerArea"></div>
  <h3>Full Movie</h3>
  <div class="player-box">
-  <iframe id="moviePlayer"
-   src=""
+  <iframe id="moviePlayer" src=""
    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
    allowfullscreen>
   </iframe>
@@ -121,6 +146,14 @@ footer{text-align:center;color:#888;padding:25px}
   <input id="youtubeLink" type="url" placeholder="Paste YouTube video link">
 
   <button id="uploadButton" onclick="uploadMovie()">Publish Movie</button>
+
+  <div id="progressBox">
+   <p id="progressText">Upload progress: 0%</p>
+   <div id="progressTrack">
+    <div id="progressFill"></div>
+   </div>
+  </div>
+
   <p class="notice">Full movies are hosted on YouTube. Posters and trailers use Supabase storage.</p>
  </div>
 </section>
@@ -157,6 +190,7 @@ function updateAccount(){
  currentUser?"Logged in as "+currentUser.email:"You are not logged in.";
 
  const isAdmin=currentUser&&currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+
  document.getElementById("adminButton").style.display=isAdmin?"inline-block":"none";
  document.getElementById("adminStatus").textContent=
  isAdmin?"Administrator logged in.":"Please log in as administrator.";
@@ -169,9 +203,11 @@ async function login(){
 
  const {data,error}=await db.auth.signInWithPassword({email,password});
  if(error)return message(error.message);
+
  currentUser=data.user;
  updateAccount();
  message("Login successful!");
+
  if(currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase())showPage("admin");
 }
 
@@ -182,12 +218,14 @@ async function register(){
 
  const {error}=await db.auth.signUp({email,password});
  if(error)return message(error.message);
+
  message("Registration submitted. You can now try logging in.");
 }
 
 async function logout(){
  const {error}=await db.auth.signOut();
  if(error)return message(error.message);
+
  currentUser=null;
  updateAccount();
  showPage("home");
@@ -203,22 +241,27 @@ function escapeHTML(value){
 async function getStorageUrl(path){
  if(!path)return "";
  if(path.startsWith("http"))return path;
+
  const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
  if(error)return "";
+
  return data.signedUrl;
 }
 
 async function loadMovies(){
  if(!db)return;
+
  const {data,error}=await db.from("movies")
  .select("*").eq("is_published",true)
  .order("created_at",{ascending:false});
 
  if(error)return message("Movie loading error: "+error.message);
+
  movies=data||[];
 
  const cards=await Promise.all(movies.map(async movie=>{
   const poster=await getStorageUrl(movie.poster_url);
+
   return `
   <div class="card">
    <img src="${escapeHTML(poster)}" alt="Movie poster">
@@ -239,13 +282,16 @@ async function loadMovies(){
 function getYouTubeId(link){
  try{
   const url=new URL(link);
+
   if(url.hostname==="youtu.be")return url.pathname.slice(1);
+
   if(url.hostname.includes("youtube.com")){
    if(url.pathname==="/watch")return url.searchParams.get("v");
    if(url.pathname.startsWith("/embed/"))return url.pathname.split("/")[2];
    if(url.pathname.startsWith("/shorts/"))return url.pathname.split("/")[2];
   }
  }catch(e){}
+
  return null;
 }
 
@@ -254,11 +300,13 @@ async function openMovie(id){
  if(!selectedMovie)return;
 
  showPage("watch");
+
  document.getElementById("watchTitle").textContent=selectedMovie.title;
  document.getElementById("watchDescription").textContent=selectedMovie.description||"";
 
  const youtubeId=getYouTubeId(selectedMovie.video_url||"");
  const player=document.getElementById("moviePlayer");
+
  player.src=youtubeId?
  "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(youtubeId):
  "";
@@ -268,11 +316,13 @@ async function openMovie(id){
 
  if(selectedMovie.trailer_url){
   const trailer=await getStorageUrl(selectedMovie.trailer_url);
+
   if(trailer){
    const video=document.createElement("video");
    video.controls=true;
    video.playsInline=true;
    video.src=trailer;
+
    trailerArea.appendChild(document.createElement("h3")).textContent="Trailer";
    trailerArea.appendChild(video);
   }
@@ -285,6 +335,7 @@ async function buyMovie(){
   showPage("account");
   return;
  }
+
  if(!selectedMovie)return;
 
  const {error}=await db.from("purchases").insert({
@@ -292,7 +343,9 @@ async function buyMovie(){
   movie_id:selectedMovie.id,
   status:"pending"
  });
+
  if(error)return message(error.message);
+
  message("K15 payment request recorded. Contact the administrator to verify payment.");
 }
 
@@ -302,11 +355,64 @@ async function subscribe(){
   showPage("account");
   return;
  }
+
  const {error}=await db.from("subscriptions").insert({
-  user_id:currentUser.id,status:"pending"
+  user_id:currentUser.id,
+  status:"pending"
  });
+
  if(error)return message(error.message);
+
  message("K40 subscription request recorded. Await payment verification.");
+}
+
+function updateProgress(percent){
+ const value=Math.max(0,Math.min(100,Math.round(percent)));
+
+ document.getElementById("progressBox").style.display="block";
+ document.getElementById("progressFill").style.width=value+"%";
+ document.getElementById("progressText").textContent="Upload progress: "+value+"%";
+}
+
+function uploadFileWithProgress(file,path,token,onProgress){
+ return new Promise((resolve,reject)=>{
+  const xhr=new XMLHttpRequest();
+
+  const encodedPath=path.split("/").map(encodeURIComponent).join("/");
+  const encodedBucket=encodeURIComponent(BUCKET);
+
+  xhr.open("POST",SUPABASE_URL+"/storage/v1/object/"+encodedBucket+"/"+encodedPath);
+
+  xhr.setRequestHeader("apikey",SUPABASE_KEY);
+  xhr.setRequestHeader("Authorization","Bearer "+token);
+  xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");
+  xhr.setRequestHeader("x-upsert","false");
+  xhr.setRequestHeader("cache-control","3600");
+
+  xhr.upload.addEventListener("progress",event=>{
+   if(event.lengthComputable){
+    onProgress(event.loaded/event.total);
+   }
+  });
+
+  xhr.onload=()=>{
+   if(xhr.status>=200&&xhr.status<300){
+    resolve(path);
+   }else{
+    let errorMessage=xhr.responseText||"Upload failed";
+    try{
+     const response=JSON.parse(xhr.responseText);
+     errorMessage=response.message||response.error||errorMessage;
+    }catch(e){}
+    reject(new Error(errorMessage));
+   }
+  };
+
+  xhr.onerror=()=>reject(new Error("Network error during upload."));
+  xhr.onabort=()=>reject(new Error("Upload cancelled."));
+
+  xhr.send(file);
+ });
 }
 
 async function uploadMovie(){
@@ -328,28 +434,51 @@ async function uploadMovie(){
 
  const button=document.getElementById("uploadButton");
  button.disabled=true;
- message("Uploading movie poster and trailer...");
+
+ updateProgress(0);
+ message("Preparing upload...");
 
  const folder=Date.now().toString();
 
  try{
+  const {data:{session},error:sessionError}=await db.auth.getSession();
+
+  if(sessionError||!session)throw new Error("Please log in again.");
+
+  const files=trailer?[poster,trailer]:[poster];
+  const totalBytes=files.reduce((sum,file)=>sum+file.size,0);
+  let completedBytes=0;
+
   async function upload(file,name){
    const path=folder+"/"+name;
-   const {error}=await db.storage.from(BUCKET).upload(path,file,{
-    contentType:file.type,
-    cacheControl:"3600",
-    upsert:false
-   });
-   if(error)throw error;
+
+   message("Uploading "+name+"...");
+
+   await uploadFileWithProgress(
+    file,
+    path,
+    session.access_token,
+    fraction=>{
+     const currentBytes=completedBytes+(file.size*fraction);
+     updateProgress((currentBytes/totalBytes)*100);
+    }
+   );
+
+   completedBytes+=file.size;
+   updateProgress((completedBytes/totalBytes)*100);
+
    return path;
   }
 
   const posterPath=await upload(poster,"poster-"+poster.name);
+
   let trailerPath=null;
 
   if(trailer){
    trailerPath=await upload(trailer,"trailer-"+trailer.name);
   }
+
+  message("Saving movie details...");
 
   const {error}=await db.from("movies").insert({
    title:title,
@@ -363,7 +492,9 @@ async function uploadMovie(){
 
   if(error)throw error;
 
+  updateProgress(100);
   message("Movie published successfully!");
+
   document.getElementById("movieTitle").value="";
   document.getElementById("movieDescription").value="";
   document.getElementById("posterFile").value="";
@@ -387,8 +518,10 @@ async function startApp(){
   }
 
   db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
   const {data:{session}}=await db.auth.getSession();
   currentUser=session?session.user:null;
+
   updateAccount();
 
   db.auth.onAuthStateChange((_event,session)=>{
@@ -397,6 +530,7 @@ async function startApp(){
   });
 
   await loadMovies();
+
  }catch(error){
   message("Website error: "+error.message);
  }
