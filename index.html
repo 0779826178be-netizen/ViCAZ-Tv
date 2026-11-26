@@ -3,410 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080808">
-
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
- margin:0;
- background:#080808;
- color:white;
- font-family:Arial,sans-serif;
+ margin:0;background:#090909;color:white;
+ font-family:Arial,sans-serif;padding-bottom:30px
 }
-
 header{
- background:#111;
- padding:12px 4%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- border-bottom:1px solid #292929;
- position:sticky;
- top:0;
- z-index:10;
+ background:#171717;padding:15px;text-align:center;
+ border-bottom:2px solid #e50914
 }
-
-.logo{
- width:145px;
- height:auto;
+header img{width:100%;max-width:300px;max-height:100px;object-fit:contain}
+nav{
+ display:flex;justify-content:center;gap:22px;
+ padding:15px;background:#111
 }
-
-nav a{
- color:white;
- text-decoration:none;
- margin-left:13px;
- font-size:13px;
+nav a{color:white;text-decoration:none;font-weight:bold}
+h2{padding:0 15px;color:#ff3333}
+input{
+ width:90%;margin:15px 5%;padding:13px;
+ border:0;border-radius:6px;font-size:16px
 }
-
-nav a:hover{color:#e50914}
-
-.search{
- padding:20px 4%;
- background:#151515;
-}
-
-.search input{
- width:100%;
- padding:14px;
- border-radius:6px;
- border:1px solid #444;
- background:#080808;
- color:white;
- font-size:16px;
-}
-
-.hero{
- padding:45px 5%;
- min-height:260px;
- background:linear-gradient(90deg,#080808,#481010,#080808);
-}
-
-.hero h1{font-size:36px}
-
-.hero p{
- color:#ccc;
- line-height:1.6;
-}
-
-.btn{
- display:inline-block;
- padding:12px 20px;
- border-radius:5px;
- background:#e50914;
- color:white;
- text-decoration:none;
- border:0;
- font-weight:bold;
- cursor:pointer;
-}
-
-section{padding:22px 4%}
-
-.title{
- border-left:4px solid #e50914;
- padding-left:12px;
- font-size:21px;
-}
-
-.categories{
- display:flex;
- gap:10px;
- overflow-x:auto;
- padding:10px 0;
-}
-
-.categories button{
- background:#222;
- color:white;
- border:0;
- border-radius:20px;
- padding:10px 18px;
- white-space:nowrap;
-}
-
-.categories button.active{background:#e50914}
-
-.movies{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:15px;
-}
-
-.movie{
- background:#171717;
- border-radius:8px;
- overflow:hidden;
-}
-
-.poster{
- width:100%;
- height:230px;
- object-fit:cover;
- display:block;
-}
-
-.movie-info{padding:12px}
-
-.movie-info h3{
- font-size:15px;
- margin:5px 0;
-}
-
-.details{
- color:#aaa;
- font-size:12px;
- margin:8px 0;
-}
-
-.price{
- color:#58a6ff;
- font-weight:bold;
-}
-
-.movie-info a{
- display:block;
- text-align:center;
- width:100%;
- padding:12px 5px;
- background:#e50914;
- border-radius:5px;
- color:white;
- text-decoration:none;
- font-weight:bold;
- margin-top:9px;
- font-size:13px;
-}
-
-.movie-info a:hover{background:#b20710}
-
-.movie-info .paid{
- background:#174b9b;
-}
-
 .plans{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
+ display:flex;gap:12px;padding:15px
 }
-
 .plan{
- background:#181818;
- padding:20px 10px;
- text-align:center;
- border:1px solid #333;
- border-radius:8px;
+ flex:1;background:#191919;padding:15px;
+ border:1px solid #e50914;border-radius:8px;text-align:center
 }
-
-.plan h2{font-size:17px}
-
-.amount{
- color:#e50914;
- font-size:30px;
- font-weight:bold;
+button,.btn{
+ display:inline-block;background:#e50914;color:white;
+ border:0;padding:12px;border-radius:5px;
+ text-decoration:none;font-weight:bold;cursor:pointer
 }
-
-.payment{
- background:#171717;
- padding:20px;
- border-radius:8px;
+.movies{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:12px;padding:12px
 }
-
-.payment input,
-.payment select{
- width:100%;
- padding:13px;
- margin:8px 0;
- background:#080808;
- border:1px solid #444;
- color:white;
- border-radius:5px;
+.card{
+ background:#191919;border-radius:8px;overflow:hidden;
+ padding-bottom:12px
 }
-
-.payment button{
- width:100%;
- padding:13px;
- background:#e50914;
- color:white;
- border:0;
- border-radius:5px;
- font-weight:bold;
+.card img{
+ width:100%;height:190px;object-fit:cover
 }
-
-footer{
- background:#111;
- text-align:center;
- padding:30px 15px;
- color:#aaa;
- margin-top:30px;
-}
-
-@media(min-width:700px){
- .movies{grid-template-columns:repeat(4,1fr)}
- .poster{height:300px}
- .hero{padding:70px 8%}
-}
+.card h3{font-size:16px;padding:0 9px}
+.card p{font-size:13px;color:#ccc;padding:0 9px}
+.card .btn{margin:5px 9px;font-size:12px}
+.price{color:#ff4444;font-weight:bold;padding:0 9px}
+#status{padding:15px;color:#ccc}
+footer{text-align:center;padding:25px;color:#aaa}
 </style>
 </head>
 
 <body>
 
 <header>
-
-<img class="logo"
-src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
+<img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
 alt="VICAZ TV Logo">
-
-<nav>
-<a href="#home">Home</a>
-<a href="#movies">Movies</a>
-<a href="#plans">Plans</a>
-</nav>
-
+<h3>Your Home of Entertainment</h3>
 </header>
 
-<div class="search">
-<input type="search"
-id="search"
-placeholder="🔍 Search movies..."
-oninput="searchMovies()">
-</div>
+<nav>
+<a href="#home">HOME</a>
+<a href="#movies">MOVIES</a>
+<a href="#plans">PLANS</a>
+</nav>
 
-<div class="hero" id="home">
-
-<h1>WELCOME TO VICAZ TV</h1>
-
-<p>Your Home of Entertainment.</p>
-
-<p>
-Discover exciting movies, drama, comedy
-and original stories.
+<section id="home">
+<h2>Welcome to VICAZ TV</h2>
+<p style="padding:0 15px">
+Watch exciting Zambian movies, comedy and entertainment.
 </p>
-
-<a href="#movies" class="btn">
-EXPLORE MOVIES
-</a>
-
-</div>
-
-<section id="movies">
-
-<h2 class="title">All Movies</h2>
-
-<div class="categories">
-<button class="active">All Movies</button>
-<button>Drama</button>
-<button>Comedy</button>
-<button>Action</button>
-<button>Romance</button>
-</div>
-
-<div class="movies">
-
-<div class="movie">
-
-<img class="poster"
-src="file_00000000f9b48210a87218812fee24f9.jpg"
-alt="My Ex Wife Poster">
-
-<div class="movie-info">
-
-<h3>MY EX WIFE 💔</h3>
-
-<div class="details">
-VICAZ ORIGINAL | Drama
-</div>
-
-<div class="details">
-⭐ New Release
-</div>
-
-<div class="price">
-K15 / Full Movie
-</div>
-
-<a href="https://youtu.be/nBR9CXEwDEE"
-target="_blank"
-rel="noopener">
-▶ WATCH FREE TRAILER
-</a>
-
-<a href="#payment" class="paid"
-onclick="selectMovie()">
-🔒 FULL MOVIE - K15
-</a>
-
-</div>
-</div>
-
-</div>
+<input id="search" type="search"
+placeholder="Search movies..." oninput="filterMovies()">
 </section>
 
 <section id="plans">
-
-<h2 class="title">Our Subscription Plans</h2>
-
+<h2>Our Plans</h2>
 <div class="plans">
-
 <div class="plan">
-<h2>Single Movie</h2>
-<div class="amount">K15</div>
+<h3>Single Movie</h3>
+<h2>K15</h2>
 <p>Pay per movie</p>
 </div>
-
 <div class="plan">
-<h2>Monthly Access</h2>
-<div class="amount">K40</div>
+<h3>Monthly Plan</h3>
+<h2>K40</h2>
 <p>Monthly subscription</p>
+<a class="btn" href="https://wa.me/260778603979?text=I%20want%20the%20VICAZ%20TV%20monthly%20subscription%20for%20K40">
+SUBSCRIBE
+</a>
 </div>
-
 </div>
 </section>
 
-<section id="payment">
-
-<h2 class="title">Request Movie Access</h2>
-
-<div class="payment">
-
-<p>
-Enter your details to request movie access.
-</p>
-
-<input id="name"
-placeholder="Your full name">
-
-<input id="phone"
-placeholder="Your phone number">
-
-<select id="plan">
-<option value="My Ex Wife - K15">
-My Ex Wife - K15
-</option>
-
-<option value="Monthly Subscription - K40">
-Monthly Subscription - K40
-</option>
-</select>
-
-<input id="transaction"
-placeholder="Payment transaction ID (if paid)">
-
-<button onclick="sendRequest()">
-SEND PAYMENT REQUEST
-</button>
-
-<p class="details">
-Airtel Money: 0778603979<br>
-Payments are verified by the VICAZ TV administrator.
-</p>
-
-</div>
+<section id="movies">
+<h2>Our Movies</h2>
+<p id="status">Loading movies...</p>
+<div class="movies" id="movieList"></div>
 </section>
 
 <footer>
-
-<h2>VICAZ TV</h2>
-
-<p>Your Home of Entertainment</p>
-
-<p>Movies | Drama | Comedy | Music</p>
-
-<p>© 2026 VICAZ TV. All Rights Reserved.</p>
-
+<p>VICAZ TV © 2026</p>
+<p>For support: WhatsApp 0778603979</p>
 </footer>
 
 <script>
+const SUPABASE_URL =
+"https://baqdstusvqljjowibjby.supabase.co";
 
-function searchMovies(){
+const SUPABASE_KEY =
+"sb_publishable_OSvzQ6yRBj9VTBi2Sp909A_m_OQUAPY";
 
-let value=document
-.getElementById("search")
-.value.toLowerCase();
+let allMovies = [];
 
-document.querySelectorAll(".movie").forEach(movie=>{
+async function loadMovies(){
+ const status = document.getElementById("status");
 
-movie.style.display=
-movie.innerText.toLower
+ try{
+  const response = await fetch(
+   SUPABASE_URL +
+   "/rest/v1/movies?select=id,title,description,poster_url,trailer_url,category,price,created_at,is_published,active&is_published=eq.true&active=eq.true&order=created_at.desc",
+   {
+    headers:{
+     "apikey":SUPABASE_KEY,
+     "Authorization":"Bearer "+SUPABASE_KEY
+    }
+   }
+  );
+
+  if(!response.ok){
+   throw new Error("Database connection failed: "+response.status);
+  }
+
+  allMovies = await response.json();
+  status.textContent = allMovies.length
+   ? "Enjoy our movies!"
+   : "No published movies yet.";
+
+  displayMovies(allMovies);
+
+ }catch(error){
+  status.textContent =
+   "Unable to load movies. Please check your Supabase connection and table settings.";
+  console.error(error);
+ }
+}
+
+function displayMovies(movies){
+ const list = document.getElementById("movieList");
+ list.innerHTML = "";
+
+ movies.forEach(movie=>{
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const poster = document.createElement("img");
+  poster.src = movie.poster_url || "";
+  poster.alt = movie.title || "Movie poster";
+
+  const title = document.createElement("h3");
+  title.textContent = movie.title || "Untitled movie";
+
+  const description = document.createElement("p");
+  description.textContent = movie.description || "";
+
+  const price = document.createElement("div");
+  price.className = "price";
+  price.textContent = "K" + (movie.price || 15);
+
+  card.append(poster,title,description,price);
+
+  if(movie.trailer_url){
+   const trailer = document.createElement("a");
+   trailer.className = "btn";
+   trailer.textContent = "▶ FREE TRAILER";
+   trailer.href = movie.trailer_url;
+   trailer.target = "_blank";
+   trailer.rel = "noopener";
+   card.appendChild(trailer);
+  }
+
+  const payment = document.createElement("a");
+  payment.className = "btn";
+  payment.textContent = "GET FULL MOVIE";
+  payment.href =
+   "https://wa.me/260778603979?text=" +
