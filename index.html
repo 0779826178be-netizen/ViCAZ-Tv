@@ -3,100 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
  margin:0;
  background:#090909;
  color:white;
  font-family:Arial,sans-serif;
 }
+
 header{
- background:#151515;
- padding:15px;
- text-align:center;
+ background:#111;
+ padding:12px 20px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
  border-bottom:2px solid #e50914;
 }
+
 .logo{
- width:100%;
- max-width:420px;
- max-height:130px;
+ width:150px;
+ height:65px;
  object-fit:contain;
 }
-nav{
- padding:14px;
- text-align:center;
- background:#1b1b1b;
-}
+
 nav a{
  color:white;
  text-decoration:none;
- margin:0 10px;
+ margin:0 8px;
  font-size:14px;
 }
+
 .hero{
- padding:55px 20px;
- min-height:260px;
- background:linear-gradient(90deg,#000,#550000);
+ min-height:350px;
+ padding:65px 25px;
+ background:linear-gradient(90deg,#000 10%,#500000 100%);
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
 }
-.hero h1{font-size:36px}
-.hero p{color:#ddd;line-height:1.6}
+
+.hero h1{
+ font-size:40px;
+ margin:10px 0;
+}
+
+.hero p{
+ color:#ddd;
+ line-height:1.6;
+}
+
 button{
  background:#e50914;
  color:white;
- border:0;
- padding:12px 18px;
+ border:none;
+ padding:13px 20px;
  border-radius:5px;
  font-weight:bold;
+ cursor:pointer;
 }
-section{padding:20px 15px}
-h2{
+
+section{
+ padding:25px 18px;
+}
+
+.section-title{
  border-left:4px solid #e50914;
- padding-left:10px;
+ padding-left:12px;
+ margin-bottom:20px;
 }
+
+.search{
+ width:100%;
+ padding:14px;
+ background:#222;
+ border:1px solid #444;
+ color:white;
+ border-radius:6px;
+ margin-bottom:20px;
+}
+
 .movies{
  display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:14px;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:15px;
 }
+
 .card{
- background:#1b1b1b;
- border-radius:8px;
+ background:#191919;
+ border-radius:9px;
  overflow:hidden;
 }
+
 .card iframe{
  width:100%;
  aspect-ratio:16/9;
  border:0;
+ display:block;
 }
-.card h3{font-size:15px;padding:0 10px}
-.card p{font-size:12px;color:#bbb;padding:0 10px}
+
+.card h3{
+ font-size:15px;
+ padding:0 10px;
+}
+
+.card p{
+ color:#bbb;
+ font-size:12px;
+ padding:0 10px;
+}
+
 .card a{
  display:block;
+ text-align:center;
  background:#e50914;
  color:white;
- text-align:center;
- padding:12px;
  text-decoration:none;
+ padding:12px;
+ font-size:13px;
 }
+
 .info{
  background:#191919;
- padding:20px;
- margin:15px 0;
+ padding:22px;
  border-radius:8px;
+ margin-bottom:18px;
 }
-.info p{line-height:1.6;color:#ddd}
+
+.info p{
+ color:#ccc;
+ line-height:1.7;
+}
+
+.info a{
+ text-decoration:none;
+}
+
 footer{
  background:#151515;
  text-align:center;
- padding:25px;
+ padding:30px;
  color:#aaa;
+ margin-top:30px;
 }
+
 @media(min-width:700px){
- .movies{grid-template-columns:repeat(3,1fr)}
- .hero{padding:85px 50px}
+ .movies{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+ }
+ .hero{
+  padding:90px 60px;
+ }
 }
 </style>
 </head>
@@ -104,13 +166,47 @@ footer{
 <body>
 
 <header>
-<img class="logo"
-src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
-alt="VICAZ TV Logo">
-</header>
+<img
+ class="logo"
+ src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
+ alt="VICAZ TV Logo">
 
 <nav>
 <a href="#home">Home</a>
-<a href="#movies">Trailers</a>
+<a href="#movies">Movies</a>
 <a href="#subscribe">Subscribe</a>
-<a href="#about">
+</nav>
+</header>
+
+<main>
+
+<div class="hero" id="home">
+<p>WELCOME TO VICAZ MOVIES ENTERTAINMENT</p>
+
+<h1>Your Home of Entertainment</h1>
+
+<p>
+Enjoy exciting Zambian movies, comedy, drama
+and exclusive movie trailers.
+</p>
+
+<a href="#movies">
+<button>WATCH TRAILERS</button>
+</a>
+</div>
+
+<section id="movies">
+
+<h2 class="section-title">Latest Movie Trailers</h2>
+
+<input
+ class="search"
+ id="search"
+ type="text"
+ placeholder="Search for a movie..."
+ oninput="searchMovies()">
+
+<div class="movies" id="movieList">
+
+<div class="card">
+<
