@@ -4,319 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090909;color:white;
+ font-family:Arial,sans-serif;
 }
-
-body {
-    margin: 0;
-    background: #090909;
-    color: white;
-    font-family: Arial, sans-serif;
+header{
+ background:#151515;text-align:center;
+ padding:20px;border-bottom:2px solid red;
 }
-
-header {
-    background: #151515;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 2px solid red;
+header img{width:180px;max-width:80%}
+header h1{color:red;margin:10px}
+nav{
+ display:flex;justify-content:center;gap:20px;
+ flex-wrap:wrap;background:#202020;padding:15px;
 }
-
-header img {
-    width: 180px;
-    max-width: 80%;
-    border-radius: 8px;
+nav a{color:white;text-decoration:none;font-weight:bold}
+nav a:hover{color:red}
+.container{max-width:1000px;margin:auto;padding:18px}
+h2{color:red;border-bottom:1px solid #333;padding-bottom:10px}
+.card{
+ background:#181818;padding:15px;
+ margin:15px 0;border-radius:10px;
 }
-
-header h1 {
-    color: red;
-    margin: 10px 0 5px;
+.video{
+ width:100%;aspect-ratio:16/9;
+ border:0;border-radius:8px;
 }
-
-header p {
-    color: #ccc;
-    margin: 0;
+button{
+ background:red;color:white;border:0;
+ padding:13px 18px;border-radius:6px;
+ font-weight:bold;margin:5px;cursor:pointer;
 }
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background: #202020;
-    padding: 15px;
-    flex-wrap: wrap;
+button:hover{background:darkred}
+.plans{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
 }
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
+.plan{
+ background:#181818;padding:20px;
+ border:1px solid #333;border-radius:10px;
+ text-align:center;
 }
-
-nav a:hover {
-    color: red;
+.plan h3{color:red}
+footer{
+ background:#151515;text-align:center;
+ padding:25px;color:#aaa;margin-top:30px;
 }
-
-.container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-h2 {
-    color: red;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.feature {
-    background: #181818;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-}
-
-.feature img {
-    width: 100%;
-    max-width: 350px;
-    display: block;
-    margin: auto;
-    border-radius: 8px;
-}
-
-button {
-    background: red;
-    color: white;
-    border: none;
-    padding: 13px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 5px;
-}
-
-button:hover {
-    background: darkred;
-}
-
-.youtube-box {
-    background: #181818;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-}
-
-iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border: none;
-    border-radius: 8px;
-}
-
-.plans {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-}
-
-.plan {
-    background: #191919;
-    padding: 20px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.plan h3 {
-    color: red;
-}
-
-footer {
-    text-align: center;
-    background: #151515;
-    padding: 20px;
-    margin-top: 30px;
-    color: #aaa;
-}
-
+.small{color:#aaa;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <header>
-    <img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
-         alt="VICAZ TV Logo">
-
-    <h1>VICAZ TV</h1>
-    <p>Your Home of Entertainment</p>
+<img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
+alt="VICAZ TV Logo">
+<h1>VICAZ TV</h1>
+<p>Your Home of Entertainment</p>
 </header>
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#trailers">Trailers</a>
-    <a href="#movies">Movies</a>
-    <a href="#plans">Plans</a>
-    <a href="#contact">Contact</a>
+<a href="#home">Home</a>
+<a href="#trailers">Trailers</a>
+<a href="#movies">Movies</a>
+<a href="#plans">Plans</a>
+<a href="#contact">Contact</a>
 </nav>
 
 <main class="container">
 
 <section id="home">
-    <h2>Welcome to VICAZ TV</h2>
-    <p>
-        Watch exciting Zambian movies, comedy, drama and entertainment
-        from VICAZ Movies Entertainment.
-    </p>
-</section>
-
-<section class="feature" id="movies">
-    <h2>Featured Movie</h2>
-
-    <img src="file_00000000f9b48210a87218812fee24f9.jpg"
-         alt="MY EX WIFE movie poster">
-
-    <h3>MY EX WIFE</h3>
-
-    <p>Watch the official free trailer below.</p>
-
-    <button onclick="watchFeaturedTrailer()">
-        WATCH FREE TRAILER
-    </button>
-
-    <button onclick="requestMovie()">
-        REQUEST FULL MOVIE - K15
-    </button>
+<h2>Welcome to VICAZ TV</h2>
+<p>Watch exciting Zambian movies, comedy, drama and entertainment.</p>
 </section>
 
 <section id="trailers">
-    <h2>Latest VICAZ TV Trailers</h2>
+<h2>Latest VICAZ Movie Trailers</h2>
+<p>Watch our movie trailers below.</p>
 
-    <p>
-        New public trailers uploaded to our YouTube channel
-        will appear in this playlist.
-    </p>
+<div id="videoList">
 
-    <div class="youtube-box">
-        <iframe
-            src="https://www.youtube.com/embed/videoseries?list=UURFtWAz1p0LZujP2Hflzw2A"
-            title="VICAZ Movies Entertainment Trailers"
-            allow="accelerometer; autoplay; clipboard-write;
-            encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
-    </div>
+<div class="card">
+<h3>MY EX WIFE</h3>
+<iframe class="video"
+src="https://www.youtube.com/embed/nBR9CXEwDEE"
+allowfullscreen></iframe>
+</div>
 
-    <button onclick="openYouTube()">
-        VISIT OUR YOUTUBE CHANNEL
-    </button>
+<div class="card">
+<h3>MY BROTHER MY ENEMY</h3>
+<iframe class="video"
+src="https://www.youtube.com/embed/iHILHci4nZ4"
+allowfullscreen></iframe>
+</div>
+
+<div class="card">
+<h3>VICAZ MOVIE TRAILER</h3>
+<iframe class="video"
+src="https://www.youtube.com/embed/gDs6nw9T7Xc"
+allowfullscreen></iframe>
+</div>
+
+<div class="card">
+<h3>VICAZ MOVIE TRAILER</h3>
+<iframe class="video"
+src="https://www.youtube.com/embed/LuPLWY9RSTA"
+allowfullscreen></iframe>
+</div>
+
+</div>
+
+<p id="feedStatus" class="small">
+Checking for new YouTube uploads...
+</p>
+
+<button onclick="openChannel()">
+VISIT OUR YOUTUBE CHANNEL
+</button>
+</section>
+
+<section id="movies">
+<h2>VICAZ Movies</h2>
+
+<div class="card">
+<h3>MY EX WIFE</h3>
+<p>Watch the free trailer above.</p>
+<button onclick="requestMovie()">
+REQUEST FULL MOVIE - K15
+</button>
+</div>
 </section>
 
 <section id="plans">
-    <h2>VICAZ TV Plans</h2>
+<h2>Subscription Plans</h2>
 
-    <div class="plans">
+<div class="plans">
+<div class="plan">
+<h3>Single Movie</h3>
+<h2>K15</h2>
+<p>Request an individual movie.</p>
+<button onclick="requestMovie()">REQUEST MOVIE</button>
+</div>
 
-        <div class="plan">
-            <h3>Single Movie</h3>
-            <h2>K15</h2>
-            <p>Request access to an individual movie.</p>
+<div class="plan">
+<h3>Monthly Plan</h3>
+<h2>K40</h2>
+<p>Monthly subscription request.</p>
+<button onclick="requestMonthly()">SUBSCRIBE</button>
+</div>
+</div>
 
-            <button onclick="requestMovie()">
-                REQUEST MOVIE
-            </button>
-        </div>
-
-        <div class="plan">
-            <h3>Monthly Plan</h3>
-            <h2>K40</h2>
-            <p>Monthly entertainment subscription request.</p>
-
-            <button onclick="requestMonthly()">
-                SUBSCRIBE
-            </button>
-        </div>
-
-    </div>
-
-    <p>
-        Payments are verified manually by the VICAZ TV administrator.
-        Access is not automatic yet.
-    </p>
+<p class="small">
+Payments are verified manually. Access is not automatic yet.
+</p>
 </section>
 
 <section id="contact">
-    <h2>Contact VICAZ TV</h2>
-
-    <p>For payments, enquiries and support:</p>
-
-    <button onclick="contactAdmin()">
-        CONTACT ADMINISTRATOR ON WHATSAPP
-    </button>
-
-    <p>
-        YouTube: VICAZ Movies Entertainment
-    </p>
+<h2>Contact VICAZ TV</h2>
+<p>For enquiries and payments:</p>
+<button onclick="contactAdmin()">CONTACT ADMIN ON WHATSAPP</button>
 </section>
 
 </main>
 
 <footer>
-    <p>© 2026 VICAZ TV</p>
-    <p>Your Home of Entertainment</p>
-    <p>Powered by VICAZ Movies Entertainment</p>
+<p>© 2026 VICAZ TV</p>
+<p>Your Home of Entertainment</p>
+<p>Powered by VICAZ Movies Entertainment</p>
 </footer>
 
 <script>
-
 const whatsapp = "260778603979";
+const channelId = "UCRFtWAz1p0LZujP2Hflzw2A";
 
-function watchFeaturedTrailer() {
-    window.open(
-        "https://youtu.be/nBR9CXEwDEE",
-        "_blank"
-    );
+function openChannel(){
+ window.open("https://youtube.com/@vicazmoviesentertainmenttv","_blank");
 }
 
-function requestMovie() {
-    window.open(
-        "https://wa.me/" + whatsapp +
-        "?text=" + encodeURIComponent(
-            "Hello VICAZ TV. I want to request MY EX WIFE full movie for K15."
-        ),
-        "_blank"
-    );
+function requestMovie(){
+ window.open("https://wa.me/"+whatsapp+
+ "?text="+encodeURIComponent("Hello VICAZ TV. I want to request a full movie for K15."),
+ "_blank");
 }
 
-function requestMonthly() {
-    window.open(
-        "https://wa.me/" + whatsapp +
-        "?text=" + encodeURIComponent(
-            "Hello VICAZ TV. I want to subscribe to the K40 monthly plan."
-        ),
-        "_blank"
-    );
+function requestMonthly(){
+ window.open("https://wa.me/"+whatsapp+
+ "?text="+encodeURIComponent("Hello VICAZ TV. I want the K40 monthly subscription."),
+ "_blank");
 }
 
-function contactAdmin() {
-    window.open(
-        "https://wa.me/" + whatsapp,
-        "_blank"
-    );
+function contactAdmin(){
+ window.open("https://wa.me/"+whatsapp,"_blank");
 }
 
-function openYouTube() {
-    window.open(
-        "https://youtube.com/@vicazmoviesentertainmenttv",
-        "_blank"
-    );
-}
+/* Fetch public YouTube uploads through an RSS converter */
+async function loadNewUploads(){
+ const status = document.getElementById("feedStatus");
+ const list = document.getElementById("videoList");
 
-</script>
+ const feed = "https://www.youtube.com/feeds/videos.xml?channel_id="+channelId;
+ const api = "https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed);
 
-</body>
-</html>
+ try{
+  const response = await fetch(api);
+  if(!response.ok) throw new Error("Feed unavailable");
+
+  const data = await response.json();
+  if(data.status !== "ok") throw new Error("Feed unavailable");
+
+  const videos = data.items || [];
+  const existing = new Set([
+   "nBR9CXEwDEE",
+   "iHILHci4nZ4",
+   "gDs6nw9T7Xc",
+   "LuPLWY9RSTA"
+  ]);
+
+  let added = 0;
+
+  videos.forEach(item=>{
+   const match = item.link.match(/[?&]v=([^&
