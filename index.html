@@ -2,62 +2,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-<title>VICAZ TV - Your Home of Entertainment</title><style>
+<meta name="theme-color" content="#080808">
+<title>VICAZ TV | Creating Stories, Inspiring Generation</title><style>
 *{box-sizing:border-box}
-body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
-header{background:#151515;padding:14px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-header img{width:60px;height:60px;object-fit:contain}
-header h2{margin:0;color:#e50914}
-header p{margin:4px 0;color:#bbb;font-size:12px}
-.hero{padding:40px 20px;text-align:center;background:linear-gradient(90deg,#000,#401010)}
-.hero h1{font-size:30px}
-.btn{display:inline-block;padding:12px 18px;background:#e50914;color:white;text-decoration:none;border-radius:5px;font-weight:bold;margin:5px}
-section{padding:20px}
-section h2{border-left:4px solid #e50914;padding-left:10px}
-.movie{background:#191919;border-radius:8px;padding:12px;margin:20px 0}
-.movie iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:6px}
-.movie h3{margin:12px 0}
-.box{background:#191919;padding:20px;border-radius:8px;margin:15px 0;text-align:center}
-footer{background:#151515;padding:25px;text-align:center;color:#aaa;margin-top:30px}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:#080808;color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ display:flex;align-items:center;gap:12px;
+ padding:12px 18px;background:#111;
+ position:sticky;top:0;z-index:20;
+ border-bottom:1px solid #292929;
+}
+.logo{width:58px;height:58px;object-fit:contain}
+.brand h2{margin:0;color:#e50914;font-size:24px}
+.brand p{margin:5px 0 0;color:#d6b46a;font-size:11px}
+nav{
+ display:flex;gap:18px;overflow-x:auto;
+ padding:13px 18px;background:#111;
+}
+nav a{color:white;text-decoration:none;white-space:nowrap;font-size:13px}
+.hero{
+ min-height:390px;padding:75px 25px 45px;
+ background:
+ linear-gradient(90deg,#080808 5%,rgba(8,8,8,.85),rgba(8,8,8,.15)),
+ linear-gradient(0deg,#080808,transparent),
+ url("https://i.ytimg.com/vi/iHILHci4nZ4/maxresdefault.jpg");
+ background-size:cover;background-position:center;
+ display:flex;flex-direction:column;justify-content:center;
+}
+.hero h1{font-size:38px;margin:0 0 12px}
+.hero p{max-width:430px;color:#ddd;line-height:1.6}
+.tagline{color:#d6b46a!important;font-weight:bold}
+.btn{
+ display:inline-block;background:#e50914;color:white;
+ text-decoration:none;padding:12px 20px;
+ border-radius:4px;font-weight:bold;margin:8px 5px 0 0;
+}
+.btn.secondary{background:#333}
+section{padding:22px 18px}
+.section-title{
+ border-left:4px solid #e50914;padding-left:10px;
+ font-size:21px;margin-bottom:17px;
+}
+.row{
+ display:flex;gap:13px;overflow-x:auto;
+ padding-bottom:12px;
+}
+.poster{
+ min-width:155px;max-width:155px;
+ background:#181818;border-radius:7px;overflow:hidden;
+}
+.poster img{
+ width:100%;height:105px;object-fit:cover;
+ display:block;
+}
+.poster h3{font-size:13px;padding:0 9px}
+.poster a{
+ display:block;text-align:center;padding:10px;
+ color:white;background:#e50914;
+ text-decoration:none;font-size:12px;
+}
+.movie{
+ background:#171717;border-radius:9px;
+ padding:12px;margin:18px 0;
+}
+.movie h3{font-size:18px}
+.movie iframe{
+ width:100%;aspect-ratio:16/9;
+ border:0;border-radius:6px;
+}
+.box{
+ background:#181818;border:1px solid #333;
+ border-radius:9px;padding:22px;text-align:center;
+ margin:14px 0;
+}
+.price{font-size:30px;color:#d6b46a;font-weight:bold}
+footer{
+ background:#111;padding:30px 20px;
+ text-align:center;color:#aaa;margin-top:30px;
+}
+footer h2{color:#e50914}
 </style></head><body><header>
-<img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png" alt="VICAZ TV Logo">
-<div>
+<img class="logo"
+src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
+alt="VICAZ TV Logo">
+<div class="brand">
 <h2>VICAZ TV</h2>
-<p>Your Home of Entertainment</p>
+<p>CREATING STORIES, INSPIRING GENERATION</p>
 </div>
-</header><div class="hero">
-<h1>WELCOME TO VICAZ TV</h1>
-<p>Watch movies, trailers and entertainment.</p>
-<a class="btn" href="#videos">WATCH VIDEOS</a>
-</div><section id="videos">
-<h2>Latest Movies & Trailers</h2><div class="movie">
+</header><nav>
+<a href="#home">HOME</a>
+<a href="#movies">MOVIES</a>
+<a href="#trailers">TRAILERS</a>
+<a href="#subscription">SUBSCRIPTIONS</a>
+<a href="#about">ABOUT US</a>
+</nav><div class="hero" id="home">
+<p class="tagline">VICAZ MOVIES ENTERTAINMENT PRESENTS</p>
+<h1>YOUR HOME OF ENTERTAINMENT</h1>
+<p>Discover exciting stories, movies, comedy and unforgettable entertainment.</p>
+<a class="btn" href="#movies">EXPLORE MOVIES</a>
+<a class="btn secondary"
+href="https://youtube.com/@vicazmoviesentertainmenttv"
+target="_blank">OUR YOUTUBE CHANNEL</a>
+</div><section id="movies">
+<h2 class="section-title">Featured Movies</h2>
+<div class="row"><div class="poster">
+<img src="https://i.ytimg.com/vi/iHILHci4nZ4/hqdefault.jpg" alt="My Brother My Enemy">
 <h3>MY BROTHER MY ENEMY</h3>
-<iframe src="https://www.youtube.com/embed/iHILHci4nZ4" title="MY BROTHER MY ENEMY" allowfullscreen></iframe>
-</div><div class="movie">
+<a href="#brother">WATCH NOW</a>
+</div><div class="poster">
+<img src="https://i.ytimg.com/vi/nBR9CXEwDEE/hqdefault.jpg" alt="My Ex Wife">
+<h3>MY EX WIFE</h3>
+<a href="#exwife">WATCH TRAILER</a>
+</div></div>
+</section><section id="trailers">
+<h2 class="section-title">Watch Movies & Trailers</h2><div class="movie" id="brother">
+<h3>MY BROTHER MY ENEMY</h3>
+<iframe
+src="https://www.youtube.com/embed/iHILHci4nZ4"
+title="My Brother My Enemy"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
+</div><div class="movie" id="exwife">
 <h3>MY EX WIFE - OFFICIAL TRAILER</h3>
-<iframe src="https://www.youtube.com/embed/nBR9CXEwDEE" title="MY EX WIFE Trailer" allowfullscreen></iframe>
-</div><div class="movie">
-<h3>More VICAZ Videos</h3>
-<a class="btn" href="https://youtube.com/@vicazmoviesentertainmenttv" target="_blank">WATCH MORE ON YOUTUBE</a>
-</div>
-</section><section>
-<h2>Watch Movies</h2><div class="box">
-<h3>One Movie</h3>
-<p>Pay K15 per movie.</p>
-<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20to%20pay%20K15%20for%20a%20movie.">REQUEST K15 ACCESS</a>
+<iframe
+src="https://www.youtube.com/embed/nBR9CXEwDEE"
+title="My Ex Wife Trailer"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
+</div><a class="btn"
+href="https://youtube.com/@vicazmoviesentertainmenttv"
+target="_blank">SEE MORE VIDEOS</a>
+
+</section><section id="subscription">
+<h2 class="section-title">Choose Your Access</h2><div class="box">
+<h3>Watch One Movie</h3>
+<div class="price">K15</div>
+<p>Request access to an individual movie.</p>
+<a class="btn"
+href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20to%20request%20K15%20movie%20access.">
+REQUEST MOVIE ACCESS</a>
 </div><div class="box">
 <h3>Monthly Subscription</h3>
-<p>Pay K40 per month.</p>
-<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20the%20K40%20monthly%20subscription.">REQUEST K40 ACCESS</a>
+<div class="price">K40</div>
+<p>Request monthly access to eligible movies.</p>
+<a class="btn"
+href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20the%20K40%20monthly%20subscription.">
+REQUEST SUBSCRIPTION</a>
 </div>
-</section><section>
-<h2>About VICAZ TV</h2>
-<p>VICAZ TV is your home of entertainment. Enjoy movies, trailers and productions from VICAZ Movies Entertainment.</p>
-<a class="btn" href="https://youtube.com/@vicazmoviesentertainmenttv" target="_blank">SUBSCRIBE ON YOUTUBE</a>
+</section><section id="about">
+<h2 class="section-title">About VICAZ TV</h2>
+<p>
+VICAZ TV is your home of entertainment, bringing you
+movies, comedy, drama and creative productions.
+</p>
+<p class="tagline">Creating Stories, Inspiring Generation.</p>
+<a class="btn"
+href="https://youtube.com/@vicazmoviesentertainmenttv"
+target="_blank">SUBSCRIBE ON YOUTUBE</a>
 </section><footer>
-<p>© 2026 VICAZ TV</p>
+<h2>VICAZ TV</h2>
+<p>Creating Stories, Inspiring Generation</p>
 <p>Powered by VICAZ Movies Entertainment</p>
-<p>For assistance: 0778603979</p>
+<p>WhatsApp: 0778603979</p>
+<p>© 2026 VICAZ TV. All rights reserved.</p>
 </footer></body>
 </html>
