@@ -3,162 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-
 <title>VICAZ TV - Your Home of Entertainment</title>
 
 <style>
 *{box-sizing:border-box}
-
-body{
- margin:0;
- background:#090909;
- color:white;
- font-family:Arial,sans-serif;
-}
-
-header{
- background:#111;
- padding:12px 20px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- border-bottom:2px solid #e50914;
-}
-
-.logo{
- width:150px;
- height:65px;
- object-fit:contain;
-}
-
-nav a{
- color:white;
- text-decoration:none;
- margin:0 8px;
- font-size:14px;
-}
-
-.hero{
- min-height:350px;
- padding:65px 25px;
- background:linear-gradient(90deg,#000 10%,#500000 100%);
- display:flex;
- flex-direction:column;
- justify-content:center;
-}
-
-.hero h1{
- font-size:40px;
- margin:10px 0;
-}
-
-.hero p{
- color:#ddd;
- line-height:1.6;
-}
-
-button{
- background:#e50914;
- color:white;
- border:none;
- padding:13px 20px;
- border-radius:5px;
- font-weight:bold;
- cursor:pointer;
-}
-
-section{
- padding:25px 18px;
-}
-
-.section-title{
- border-left:4px solid #e50914;
- padding-left:12px;
- margin-bottom:20px;
-}
-
-.search{
- width:100%;
- padding:14px;
- background:#222;
- border:1px solid #444;
- color:white;
- border-radius:6px;
- margin-bottom:20px;
-}
-
-.movies{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:15px;
-}
-
-.card{
- background:#191919;
- border-radius:9px;
- overflow:hidden;
-}
-
-.card iframe{
- width:100%;
- aspect-ratio:16/9;
- border:0;
- display:block;
-}
-
-.card h3{
- font-size:15px;
- padding:0 10px;
-}
-
-.card p{
- color:#bbb;
- font-size:12px;
- padding:0 10px;
-}
-
-.card a{
- display:block;
- text-align:center;
- background:#e50914;
- color:white;
- text-decoration:none;
- padding:12px;
- font-size:13px;
-}
-
-.info{
- background:#191919;
- padding:22px;
- border-radius:8px;
- margin-bottom:18px;
-}
-
-.info p{
- color:#ccc;
- line-height:1.7;
-}
-
-.info a{
- text-decoration:none;
-}
-
-footer{
- background:#151515;
- text-align:center;
- padding:30px;
- color:#aaa;
- margin-top:30px;
-}
-
-@media(min-width:700px){
- .movies{
-  grid-template-columns:repeat(3,minmax(0,1fr));
- }
- .hero{
-  padding:90px 60px;
- }
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
+header{background:#111;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.logo{width:140px;height:65px;object-fit:contain}
+nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
+.hero{padding:70px 25px;min-height:350px;background:linear-gradient(90deg,#000,#550000)}
+.hero h1{font-size:42px}
+.hero p{color:#ddd;line-height:1.6}
+button,.btn{background:#e50914;color:white;border:0;padding:13px 20px;border-radius:5px;text-decoration:none;font-weight:bold;display:inline-block}
+section{padding:25px 18px}
+h2{border-left:4px solid #e50914;padding-left:12px}
+.search{width:100%;padding:14px;background:#222;border:1px solid #444;color:white;border-radius:6px;margin-bottom:20px}
+.row{display:flex;gap:15px;overflow-x:auto;padding-bottom:15px}
+.movie{flex:0 0 280px;background:#191919;border-radius:8px;overflow:hidden}
+.movie iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.movie h3,.movie p{padding:0 12px}
+.movie p{color:#bbb;font-size:13px}
+.movie a{display:block;background:#e50914;color:white;text-align:center;padding:13px;text-decoration:none}
+.info{background:#191919;padding:22px;border-radius:8px;margin:18px 0}
+.info p{color:#ccc;line-height:1.7}
+footer{background:#151515;text-align:center;padding:30px;color:#aaa}
+@media(max-width:600px){
+.logo{width:105px}
+nav a{font-size:12px;margin:0 4px}
+.hero h1{font-size:34px}
+.movie{flex-basis:250px}
 }
 </style>
 </head>
@@ -166,11 +39,7 @@ footer{
 <body>
 
 <header>
-<img
- class="logo"
- src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
- alt="VICAZ TV Logo">
-
+<img class="logo" src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png" alt="VICAZ TV Logo">
 <nav>
 <a href="#home">Home</a>
 <a href="#movies">Movies</a>
@@ -178,35 +47,91 @@ footer{
 </nav>
 </header>
 
-<main>
-
 <div class="hero" id="home">
-<p>WELCOME TO VICAZ MOVIES ENTERTAINMENT</p>
-
+<p>VICAZ MOVIES ENTERTAINMENT PRESENTS</p>
 <h1>Your Home of Entertainment</h1>
-
-<p>
-Enjoy exciting Zambian movies, comedy, drama
-and exclusive movie trailers.
-</p>
-
-<a href="#movies">
-<button>WATCH TRAILERS</button>
-</a>
+<p>Discover exciting Zambian movies, comedy, drama and romance.</p>
+<a class="btn" href="#movies">WATCH TRAILERS</a>
 </div>
 
 <section id="movies">
+<h2>Discover Movies</h2>
+<input class="search" id="search" placeholder="Search movies..." oninput="searchMovies()">
 
-<h2 class="section-title">Latest Movie Trailers</h2>
+<h2>Latest Releases</h2>
 
-<input
- class="search"
- id="search"
- type="text"
- placeholder="Search for a movie..."
- oninput="searchMovies()">
+<div class="row">
 
-<div class="movies" id="movieList">
+<div class="movie">
+<iframe src="https://www.youtube.com/embed/nBR9CXEwDEE" allowfullscreen></iframe>
+<h3>MY EX WIFE</h3>
+<p>Official movie trailer</p>
+<a href="https://youtu.be/nBR9CXEwDEE" target="_blank">WATCH TRAILER</a>
+</div>
 
-<div class="card">
-<
+<div class="movie">
+<iframe src="https://www.youtube.com/embed/iHILHci4nZ4" allowfullscreen></iframe>
+<h3>MY BROTHER MY ENEMY</h3>
+<p>Movie trailer</p>
+<a href="https://youtu.be/iHILHci4nZ4" target="_blank">WATCH TRAILER</a>
+</div>
+
+<div class="movie">
+<iframe src="https://www.youtube.com/embed/gDs6nw9T7Xc" allowfullscreen></iframe>
+<h3>VICAZ MOVIES</h3>
+<p>Movie trailer</p>
+<a href="https://youtu.be/gDs6nw9T7Xc" target="_blank">WATCH TRAILER</a>
+</div>
+
+<div class="movie">
+<iframe src="https://www.youtube.com/embed/LuPLWY9RSTA" allowfullscreen></iframe>
+<h3>VICAZ ENTERTAINMENT</h3>
+<p>Movie trailer</p>
+<a href="https://youtu.be/LuPLWY9RSTA" target="_blank">WATCH TRAILER</a>
+</div>
+
+</div>
+</section>
+
+<section id="subscribe">
+<h2>Choose Your Plan</h2>
+
+<div class="info">
+<h2>Single Movie - K15</h2>
+<p>Request access to an individual movie.</p>
+<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20a%20K15%20movie" target="_blank">REQUEST K15 MOVIE</a>
+</div>
+
+<div class="info">
+<h2>Monthly Subscription - K40</h2>
+<p>Request your monthly subscription.</p>
+<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20the%20K40%20monthly%20subscription" target="_blank">SUBSCRIBE K40</a>
+</div>
+</section>
+
+<section>
+<div class="info">
+<h2>About VICAZ TV</h2>
+<p>VICAZ TV is your home of entertainment, bringing you movies, comedy, drama and exciting stories.</p>
+<a class="btn" href="https://youtube.com/@vicazmoviesentertainmenttv" target="_blank">SUBSCRIBE ON YOUTUBE</a>
+</div>
+</section>
+
+<footer>
+<p>VICAZ TV</p>
+<p>Your Home of Entertainment</p>
+<p>© 2026 VICAZ Movies Entertainment</p>
+<p>Contact: 0778603979</p>
+</footer>
+
+<script>
+function searchMovies(){
+let value=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".movie").forEach(function(movie){
+movie.style.display=movie.innerText.toLowerCase().includes(value)?"":"none";
+});
+}
+</script>
+
+</body>
+</html>
