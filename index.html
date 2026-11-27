@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-<title>VICAZ TV - Your Home of Entertainment</title>
-
-<style>
+<title>VICAZ TV - Your Home of Entertainment</title><style>
 *{box-sizing:border-box}
 body{
  margin:0;background:#090909;color:white;
@@ -17,15 +14,15 @@ header{
  display:flex;align-items:center;gap:12px;
  position:sticky;top:0;z-index:10
 }
-header img{width:55px;height:55px;object-fit:contain}
-header h2{margin:0;color:#e50914;font-size:22px}
+header img{width:60px;height:60px;object-fit:contain}
+header h2{margin:0;color:#e50914;font-size:24px}
 header p{margin:4px 0 0;color:#bbb;font-size:12px}
 .hero{
- padding:35px 20px;
- background:linear-gradient(90deg,#000, #351010);
+ padding:40px 20px;
+ background:linear-gradient(90deg,#000,#351010);
  text-align:center
 }
-.hero h1{font-size:32px;margin:10px 0;color:#fff}
+.hero h1{font-size:30px}
 .hero p{color:#ddd}
 button,.btn{
  border:0;border-radius:5px;padding:12px 18px;
@@ -33,16 +30,20 @@ button,.btn{
  font-weight:bold;display:inline-block;cursor:pointer
 }
 section{padding:20px}
-section h2{border-left:4px solid #e50914;padding-left:10px}
+section h2{
+ border-left:4px solid #e50914;padding-left:10px
+}
 #videos{
- display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
  gap:14px
 }
 .card{
- background:#191919;border-radius:8px;overflow:hidden;
- cursor:pointer
+ background:#191919;border-radius:8px;overflow:hidden
 }
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.card img{
+ width:100%;aspect-ratio:16/9;object-fit:cover
+}
 .card h3{font-size:14px;padding:0 10px}
 .card a{
  display:block;margin:10px;padding:10px;
@@ -51,77 +52,166 @@ section h2{border-left:4px solid #e50914;padding-left:10px}
 }
 #status{color:#bbb;font-size:14px}
 .box{
- background:#191919;padding:20px;border-radius:8px;
- margin:12px 0;text-align:center
+ background:#191919;padding:20px;
+ border-radius:8px;margin:12px 0;text-align:center
 }
 footer{
- background:#151515;text-align:center;padding:25px;
- color:#aaa;margin-top:30px;font-size:13px
+ background:#151515;text-align:center;
+ padding:25px;color:#aaa;margin-top:30px;
+ font-size:13px
 }
 input{
  width:100%;padding:13px;border-radius:5px;
  border:1px solid #555;background:#222;color:white
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
 <img src="a_bold_glossy_cinematic_logo_banner_on_a_dark_bl.png"
-     alt="VICAZ TV Logo">
+alt="VICAZ TV Logo">
 <div>
 <h2>VICAZ TV</h2>
 <p>Your Home of Entertainment</p>
 </div>
-</header>
-
-<div class="hero">
+</header><div class="hero">
 <h1>WELCOME TO VICAZ TV</h1>
-<p>Watch the latest movies, trailers and entertainment.</p>
+<p>Your Home of Entertainment</p>
 <a class="btn" href="#videos">WATCH VIDEOS</a>
-</div>
-
-<section>
+</div><section>
 <h2>Search Videos</h2>
 <input id="search" type="text"
 placeholder="Search for a movie or trailer..."
 oninput="filterVideos()">
-</section>
-
-<section>
+</section><section>
 <h2>Latest YouTube Uploads</h2>
-<p id="status">Loading your latest videos...</p>
+<p id="status">Connecting to YouTube...</p>
 <div id="videos"></div>
-</section>
-
-<section>
+</section><section>
 <h2>Watch Movies</h2>
-
 <div class="box">
-<h3>Watch One Movie</h3>
+<h3>One Movie</h3>
 <p>Pay K15 per movie.</p>
-<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20to%20pay%20K15%20for%20a%20movie.">
-REQUEST K15 ACCESS
-</a>
-</div>
-
-<div class="box">
+<a class="btn"
+href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20to%20pay%20K15%20for%20a%20movie.">
+REQUEST K15 ACCESS</a>
+</div><div class="box">
 <h3>Monthly Subscription</h3>
 <p>Pay K40 per month.</p>
-<a class="btn" href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20the%20K40%20monthly%20subscription.">
-REQUEST MONTHLY ACCESS
-</a>
+<a class="btn"
+href="https://wa.me/260778603979?text=Hello%20VICAZ%20TV%2C%20I%20want%20the%20K40%20monthly%20subscription.">
+REQUEST K40 ACCESS</a>
 </div>
-</section>
-
-<section>
+</section><section>
 <h2>About VICAZ TV</h2>
 <p>
 VICAZ TV is your home of entertainment.
-Enjoy movies, trailers and creative productions
-from VICAZ Movies Entertainment.
+Enjoy movies, trailers and productions from
+VICAZ Movies Entertainment.
 </p>
 <a class="btn"
 href="https://youtube.com/@vicazmoviesentertainmenttv"
-target="_blank">SUBSCRIBE ON
+target="_blank">SUBSCRIBE ON YOUTUBE</a>
+</section><footer>
+<p>© 2026 VICAZ TV</p>
+<p>Powered by VICAZ Movies Entertainment</p>
+<p>For assistance: 0778603979</p>
+</footer><script>
+let allVideos = [];
+
+async function loadVideos(){
+ const status = document.getElementById("status");
+
+ const feed =
+ "https://www.youtube.com/feeds/videos.xml?playlist_id=UURFtWAz1p0LZujP2Hflzw2A";
+
+ const api =
+ "https://api.rss2json.com/v1/api.json?rss_url=" +
+ encodeURIComponent(feed);
+
+ const controller = new AbortController();
+ const timer = setTimeout(() => controller.abort(),10000);
+
+ try{
+   const response = await fetch(api,{
+     signal:controller.signal
+   });
+
+   if(!response.ok) throw new Error("Service unavailable");
+
+   const data = await response.json();
+
+   if(data.status !== "ok" ||
+      !data.items || data.items.length === 0){
+     throw new Error("No videos found");
+   }
+
+   allVideos = data.items;
+   displayVideos(allVideos);
+   status.textContent = "Latest videos from VICAZ TV.";
+
+ }catch(error){
+   status.textContent =
+   "Videos are temporarily unavailable. Visit our YouTube channel to watch.";
+
+   const link = document.createElement("a");
+   link.href = "https://youtube.com/@vicazmoviesentertainmenttv";
+   link.target = "_blank";
+   link.className = "btn";
+   link.textContent = "WATCH ON YOUTUBE";
+   status.appendChild(document.createElement("br"));
+   status.appendChild(link);
+
+ }finally{
+   clearTimeout(timer);
+ }
+}
+
+function displayVideos(videos){
+ const container = document.getElementById("videos");
+ container.innerHTML = "";
+
+ videos.forEach(video => {
+   const match = video.link.match(/[?&]v=([^&]+)/) ||
+                 video.link.match(/youtu\.be\/([^?&]+)/);
+
+   if(!match) return;
+
+   const videoId = match[1];
+
+   const card = document.createElement("div");
+   card.className = "card";
+
+   const image = document.createElement("img");
+   image.src = "https://i.ytimg.com/vi/" +
+               videoId + "/hqdefault.jpg";
+   image.alt = video.title;
+   image.loading = "lazy";
+
+   const title = document.createElement("h3");
+   title.textContent = video.title;
+
+   const link = document.createElement("a");
+   link.href = video.link;
+   link.target = "_blank";
+   link.rel = "noopener";
+   link.textContent = "WATCH VIDEO";
+
+   card.appendChild(image);
+   card.appendChild(title);
+   card.appendChild(link);
+   container.appendChild(card);
+ });
+}
+
+function filterVideos(){
+ const search =
+ document.getElementById("search").value.toLowerCase();
+
+ const filtered = allVideos.filter(video =>
+ video.title.toLowerCase().includes(search)
+ );
+
+ displayVideos(filtered);
+}
+
+loadVideos();
+</script></body>
+</html>
